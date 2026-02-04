@@ -1,9 +1,8 @@
-import { userService } from "@/services/user.service";
-
 const HomePage = async () => {
-  const { data } = await userService.getSession();
+  // const { data } = await userService.getSession();
 
-  // console.log(data);
+  // const { data: medicineData }: any = await medicineService.getMedicines();
+
   return <div>HomePage</div>;
 };
 

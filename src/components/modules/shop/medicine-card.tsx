@@ -1,0 +1,34 @@
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+export function MedicineCard({ medicine }: any) {
+  return (
+    <Card className="relative mx-auto w-full max-w-sm pt-0  rounded rounded-5">
+      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+      <img
+        src={medicine.imageUrl}
+        alt="Event cover"
+        className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+      />
+      <CardHeader>
+        {/* <CardAction>
+          <Badge variant="secondary">Featured</Badge>
+        </CardAction> */}
+        <CardTitle>{medicine.name}</CardTitle>
+        <p className="text-sm text-gray-300">{medicine.category.name}</p>
+        <CardDescription className="text-green-600 text-md font-semibold">
+          Tk {medicine.price}
+        </CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Button className="w-full">Add to Cart</Button>
+      </CardFooter>
+    </Card>
+  );
+}
