@@ -44,4 +44,28 @@ const getMedicines = async (
   }
 };
 
-export const medicineService = { getMedicines };
+const getMedicineById = async (id: string) => {
+  try {
+    const res = await fetch(`${API_URL}/medicines/${id}`, {
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      return {
+        data: data.data,
+        error: null,
+      };
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        message: "Something went wrong",
+      },
+    };
+  }
+};
+
+export const medicineService = { getMedicines, getMedicineById };

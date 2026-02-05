@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 export function MedicineCard({ medicine }: any) {
   return (
@@ -23,8 +24,14 @@ export function MedicineCard({ medicine }: any) {
         <CardTitle>{medicine.name}</CardTitle>
         <p className="text-sm text-gray-300">{medicine.category.name}</p>
         <CardDescription className="text-green-600 text-md font-semibold">
-          Tk {medicine.price}
+          ৳ {medicine.price}
         </CardDescription>
+        <Link
+          href={`/shop/${medicine.id}`}
+          className="underline text-sm hover:text-primary"
+        >
+          View details
+        </Link>
       </CardHeader>
       <CardFooter>
         <Button className="w-full">Add to Cart</Button>
