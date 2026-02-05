@@ -54,7 +54,7 @@ const MedicineDetailsPage = async ({
           </div>
         </div>
       </div>
-      <div className="container-lg border px-5 py-2 rounded-md">
+      <div className="container border px-5 py-2 rounded-md">
         <Reviews />
       </div>
     </>
