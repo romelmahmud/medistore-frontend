@@ -3,9 +3,7 @@ import { medicineService } from "@/services/medicine.service";
 
 const ShopPage = async () => {
   const { data: medicineData }: any = await medicineService.getMedicines(
-    {
-      category: "Vitamins & Supplements",
-    },
+    {},
     {
       cache: "no-store",
     },

@@ -17,16 +17,16 @@ const MedicineDetailsPage = async ({
   console.log(medicine);
   return (
     <>
-      <div className="container py-10">
+      <div className="container py-8">
         <div className="grid md:grid-cols-2 gap-10">
           <Card className="">
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               <Image
                 src={medicine?.imageUrl}
                 alt={medicine?.name}
-                width={800}
-                height={800}
-                className="rounded-xl"
+                width={600}
+                height={600}
+                className="rounded-md"
               />
             </CardContent>
           </Card>

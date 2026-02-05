@@ -8,7 +8,7 @@ export function MedicineDetailsSkeleton() {
         {/* Image skeleton */}
         <Card>
           <CardContent className="p-6">
-            <Skeleton className="w-full h-[420px] rounded-xl" />
+            <Skeleton className="w-full h-[500px] rounded-xl" />
           </CardContent>
         </Card>
 
