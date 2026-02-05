@@ -42,6 +42,7 @@ const MedicineDetailsPage = async ({
             <p className="text-muted-foreground mt-3">
               {medicine?.description}
             </p>
+            <p className="text-sm">Dosage: {medicine?.dosage}</p>
             <p className="text-xl font-semibold">৳ {medicine?.price}</p>
 
             <p className="text-sm">Manufacturer: {medicine?.manufacturer}</p>
