@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +30,8 @@ const formSchema = z.object({
 });
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const router = useRouter();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -44,6 +47,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           return;
         } else {
           toast.success("User logged in  successfully", { id: toastId });
+          router.replace("/");
         }
       } catch (error) {
         toast.error("Failed to log in", { id: toastId });
