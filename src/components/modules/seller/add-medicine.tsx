@@ -204,19 +204,6 @@ export function AddMedicineServer() {
             </FieldGroup>
 
             <FieldGroup className="flex flex-column md:flex-row">
-              {/* Image URL */}
-              {/* <form.Field name="imageUrl">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>Image URL (optional)</FieldLabel>
-                    <Input
-                      value={field.state.value}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field> */}
               {/* Image */}
               <FieldGroup>
                 <ImageUpload form={form} />

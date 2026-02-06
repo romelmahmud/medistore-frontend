@@ -71,7 +71,7 @@ export default function Navbar({
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         {/* Logo + Desktop Menu */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center">
             <img src="/logo.png" alt="MediStore" className="h-8" />
             <span className="text-lg font-semibold tracking-tighter">
               MediStore

@@ -68,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarContent>
         <div className="flex items-center gap-2 p-4  mx-auto">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center ">
             <img src="/logo.png" alt="MediStore" className="h-8" />
             <span className="text-lg font-semibold tracking-tighter">
               MediStore
