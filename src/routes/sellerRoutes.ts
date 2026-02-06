@@ -5,6 +5,10 @@ export const sellerRoutes: Route[] = [
     title: "Seller",
     items: [
       {
+        title: "Home",
+        url: "/",
+      },
+      {
         title: "Dashboard",
         url: "/seller/dashboard",
       },

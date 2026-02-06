@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 
+import { getUser } from "@/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,6 +19,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@/context/user.context";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
@@ -30,6 +32,7 @@ const formSchema = z.object({
 });
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const { setUser } = useUser();
   const router = useRouter();
 
   const form = useForm({
@@ -42,12 +45,19 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
       const toastId = toast.loading("Logging in...");
       try {
         const { data, error } = await authClient.signIn.email(value);
+
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         } else {
-          toast.success("User logged in  successfully", { id: toastId });
-          router.replace("/");
+          const loggedInUser = await getUser();
+          setUser(loggedInUser);
+          toast.success("Logged in successfully", { id: toastId });
+          // Redirect based on role
+          if (loggedInUser.role === "ADMIN") router.replace("/admin/dashboard");
+          else if (loggedInUser.role === "SELLER")
+            router.replace("/seller/dashboard");
+          else router.replace("/");
         }
       } catch (error) {
         toast.error("Failed to log in", { id: toastId });
