@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import {
@@ -11,54 +13,69 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { Roles } from "@/constants/roles";
+import { useUser } from "@/context/user.context";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { sellerRoutes } from "@/routes/sellerRoutes";
 import { Route } from "@/types";
 import Link from "next/link";
 
-// This is sample data.
-const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
-    {
-      title: "Getting Started",
-      items: [
-        {
-          title: "Installation",
-          url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
-      ],
-    },
-  ],
-};
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-export function AppSidebar({
-  user,
-  ...props
-}: {
-  user: { role: string } & React.ComponentProps<typeof Sidebar>;
-}) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user, setUser } = useUser();
+  const router = useRouter();
   let routes: Route[] = [];
 
-  switch (user.role) {
-    case "admin":
+  switch (user?.role) {
+    case Roles.admin:
       routes = adminRoutes;
       break;
-    case "seller":
+    case Roles.seller:
       routes = sellerRoutes;
       break;
     default:
       routes = [];
       break;
   }
+  const handleLogout = async () => {
+    const toastId = toast.loading("Logging out...");
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Logging out successful", { id: toastId });
+            setUser(null);
+            router.push("/login");
+          },
+        },
+      });
+    } catch (error) {
+      toast.error("Logging out failed", { id: toastId });
+    }
+  };
 
   return (
     <Sidebar {...props}>
       <SidebarContent>
+        <div className="flex items-center gap-2 p-4  mx-auto">
+          <Link href="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="MediStore" className="h-8" />
+            <span className="text-lg font-semibold tracking-tighter">
+              MediStore
+            </span>
+          </Link>
+        </div>
+        <hr />
         {/* We create a SidebarGroup for each parent. */}
         {routes.map((item) => (
           <SidebarGroup key={item.title}>
@@ -77,6 +94,29 @@ export function AppSidebar({
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <hr className="my-1" />
+
+      <div className="flex flex-col items-center justify-center p-4 gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="w-10 h-10 cursor-pointer">
+              {user?.image ? (
+                <AvatarImage src={user?.image} alt={user.name} />
+              ) : (
+                <AvatarFallback>{user?.name[0]}</AvatarFallback>
+              )}
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/profile">Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <p>{user?.name}</p>
+        <p className="text-[12px]">{user?.email}</p>
+      </div>
       <SidebarRail />
     </Sidebar>
   );
