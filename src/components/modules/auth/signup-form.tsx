@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -26,6 +27,7 @@ import {
 import { Roles } from "@/constants/roles";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
+import Link from "next/link";
 import { toast } from "sonner";
 import * as z from "zod";
 const roles = [
@@ -184,10 +186,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button form="register-form" type="submit">
+      <CardFooter className="flex flex-col gap-5 justify-end">
+        <Button form="register-form" type="submit" className="w-full">
           Register
         </Button>
+        <FieldDescription className="text-center">
+          Already have an account? <Link href="/login">Log in</Link>
+        </FieldDescription>
       </CardFooter>
     </Card>
   );
