@@ -31,6 +31,8 @@ interface MenuItem {
 }
 
 interface NavbarProps {
+  isDashboardUser?: string | null;
+
   className?: string;
   logo?: {
     url: string;
@@ -73,6 +75,7 @@ const Navbar = ({
     signup: { title: "Sign up", url: "/register" },
   },
   className,
+  isDashboardUser,
 }: NavbarProps) => {
   return (
     <section className={cn("py-4", className)}>
@@ -96,6 +99,15 @@ const Navbar = ({
                 <NavigationMenuList>
                   {menu.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
+                {isDashboardUser && (
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                      <Link href={`/${isDashboardUser}/dashboard`}>
+                        Dashboard
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )}
               </NavigationMenu>
             </div>
           </div>
