@@ -20,8 +20,12 @@ import {
 } from "@/components/ui/select";
 import * as z from "zod";
 
+import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
+import { useState } from "react";
+
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
 export const formSchema = z.object({
   name: z.string().min(2, "Medicine name is required"),
@@ -31,11 +35,12 @@ export const formSchema = z.object({
   dosage: z.string().min(1, "Medicine dosage is required"),
   categoryId: z.string().min(1, "Category is required"),
   manufacturer: z.string().min(2, "Manufacturer is required"),
-  imageUrl: z.string().url("Invalid image URL"),
+  imageUrl: z.string().url("ImageUrl required"),
   status: z.enum(["ACTIVE", "INACTIVE"]),
 });
 
 export function AddMedicineServer() {
+  const [uploading, setUploading] = useState(false);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -53,16 +58,17 @@ export function AddMedicineServer() {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Adding medicine...");
-      try {
-        // 🔗 Call your backend here
-        // await medicineService.create(value);
+      console.log(value);
+      // const toastId = toast.loading("Adding medicine...");
+      // try {
+      //   // 🔗 Call your backend here
+      //   // await medicineService.create(value);
 
-        toast.success("Medicine added successfully", { id: toastId });
-        form.reset();
-      } catch (error) {
-        toast.error("Failed to add medicine", { id: toastId });
-      }
+      //   toast.success("Medicine added successfully", { id: toastId });
+      //   form.reset();
+      // } catch (error) {
+      //   toast.error("Failed to add medicine", { id: toastId });
+      // }
     },
   });
 
@@ -199,7 +205,7 @@ export function AddMedicineServer() {
 
             <FieldGroup className="flex flex-column md:flex-row">
               {/* Image URL */}
-              <form.Field name="imageUrl">
+              {/* <form.Field name="imageUrl">
                 {(field) => (
                   <Field>
                     <FieldLabel>Image URL (optional)</FieldLabel>
@@ -210,29 +216,35 @@ export function AddMedicineServer() {
                     <FieldError errors={field.state.meta.errors} />
                   </Field>
                 )}
-              </form.Field>
+              </form.Field> */}
+              {/* Image */}
+              <FieldGroup>
+                <ImageUpload form={form} />
+              </FieldGroup>
 
               {/* Status */}
-              <form.Field name="status">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>Status</FieldLabel>
-                    <Select
-                      value={field.state.value}
-                      onValueChange={field.handleChange}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ACTIVE">Active</SelectItem>
-                        <SelectItem value="INACTIVE">Inactive</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field>
+              <FieldGroup>
+                <form.Field name="status">
+                  {(field) => (
+                    <Field>
+                      <FieldLabel>Status</FieldLabel>
+                      <Select
+                        value={field.state.value}
+                        onValueChange={field.handleChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ACTIVE">Active</SelectItem>
+                          <SelectItem value="INACTIVE">Inactive</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FieldError errors={field.state.meta.errors} />
+                    </Field>
+                  )}
+                </form.Field>
+              </FieldGroup>
             </FieldGroup>
           </FieldGroup>
 
