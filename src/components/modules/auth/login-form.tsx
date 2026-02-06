@@ -118,9 +118,29 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         </form>
       </CardContent>
       <CardFooter className="flex flex-col gap-5 justify-end">
-        <Button form="register-form" type="submit" className="w-full">
-          Log In
-        </Button>
+        <form.Subscribe
+          selector={(state) => ({
+            isSubmitting: state.isSubmitting,
+            canSubmit: state.canSubmit,
+          })}
+        >
+          {({ isSubmitting, canSubmit }) => (
+            <Button
+              form="register-form"
+              type="submit"
+              disabled={isSubmitting || !canSubmit}
+              className="
+        w-full
+        disabled:bg-muted
+        disabled:text-muted-foreground
+        disabled:cursor-not-allowed
+        disabled:opacity-70
+      "
+            >
+              {isSubmitting ? "Logging in..." : "Log In"}
+            </Button>
+          )}
+        </form.Subscribe>
         <FieldDescription className="text-center">
           Don&apos;t have an account? <Link href="/register">Sign up</Link>
         </FieldDescription>
