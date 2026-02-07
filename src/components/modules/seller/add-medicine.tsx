@@ -164,75 +164,69 @@ export function AddMedicineServer() {
                 </Field>
               )}
             </form.Field>
+          </FieldGroup>
 
-            <FieldGroup className="flex flex-column md:flex-row">
-              {/* Category */}
-              <form.Field name="categoryId">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>Category</FieldLabel>
-                    <Select
-                      value={field.state.value}
-                      onValueChange={field.handleChange}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="painkiller">Painkiller</SelectItem>
-                        <SelectItem value="antibiotic">Antibiotic</SelectItem>
-                        <SelectItem value="vitamin">Vitamin</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field>
-              {/* Manufacturer */}
-              <form.Field name="manufacturer">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>Manufacturer</FieldLabel>
-                    <Input
-                      value={field.state.value}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field>
-            </FieldGroup>
+          <FieldGroup className="flex flex-column md:flex-row">
+            {/* Category */}
+            <form.Field name="categoryId">
+              {(field) => (
+                <Field>
+                  <FieldLabel>Category</FieldLabel>
+                  <Select
+                    value={field.state.value}
+                    onValueChange={field.handleChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="painkiller">Painkiller</SelectItem>
+                      <SelectItem value="antibiotic">Antibiotic</SelectItem>
+                      <SelectItem value="vitamin">Vitamin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            </form.Field>
+            {/* Manufacturer */}
+            <form.Field name="manufacturer">
+              {(field) => (
+                <Field>
+                  <FieldLabel>Manufacturer</FieldLabel>
+                  <Input
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            </form.Field>
+          </FieldGroup>
 
-            <FieldGroup className="flex flex-column md:flex-row">
-              {/* Image */}
-              <FieldGroup>
-                <ImageUpload form={form} />
-              </FieldGroup>
-
-              {/* Status */}
-              <FieldGroup>
-                <form.Field name="status">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>Status</FieldLabel>
-                      <Select
-                        value={field.state.value}
-                        onValueChange={field.handleChange}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ACTIVE">Active</SelectItem>
-                          <SelectItem value="INACTIVE">Inactive</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </FieldGroup>
-            </FieldGroup>
+          <FieldGroup className="flex flex-column md:flex-row">
+            <ImageUpload form={form} />
+            {/* Status */}
+            <form.Field name="status">
+              {(field) => (
+                <Field>
+                  <FieldLabel>Status</FieldLabel>
+                  <Select
+                    value={field.state.value}
+                    onValueChange={field.handleChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ACTIVE">Active</SelectItem>
+                      <SelectItem value="INACTIVE">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            </form.Field>
           </FieldGroup>
 
           <Button

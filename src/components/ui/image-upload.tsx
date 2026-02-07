@@ -7,6 +7,7 @@ import { uploadToCloudinary } from "@/lib/upload-image";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { Field } from "./field";
 function ImageUpload({ form }: { form: any }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,7 +37,7 @@ function ImageUpload({ form }: { form: any }) {
   return (
     <form.Field name="imageUrl">
       {(field: any) => (
-        <div className="space-y-2">
+        <Field>
           <Label>Product Image</Label>
 
           {/* Upload / Replace */}
@@ -77,7 +78,7 @@ function ImageUpload({ form }: { form: any }) {
               </Button>
             </div>
           )}
-        </div>
+        </Field>
       )}
     </form.Field>
   );

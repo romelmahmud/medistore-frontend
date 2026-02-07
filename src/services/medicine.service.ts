@@ -24,6 +24,8 @@ const getMedicines = async (
       config.next = { revalidate: options.revalidate };
     }
 
+    config.next = { ...config.next, tags: ["medicines"] };
+
     const res = await fetch(url.toString(), config);
 
     const data = await res.json();
