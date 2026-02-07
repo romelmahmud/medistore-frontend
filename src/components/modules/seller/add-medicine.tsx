@@ -25,9 +25,10 @@ import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
-const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
-const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
-
+type Category = {
+  id: string;
+  name: string;
+};
 export const formSchema = z.object({
   name: z.string().min(2, "Medicine name is required"),
   description: z.string().min(10, "Description is too short"),
@@ -40,7 +41,7 @@ export const formSchema = z.object({
   status: z.enum(["ACTIVE", "INACTIVE"]),
 });
 
-export function AddMedicineServer() {
+export function AddMedicineServer({ categories }: any) {
   const form = useForm({
     defaultValues: {
       name: "",
@@ -191,9 +192,11 @@ export function AddMedicineServer() {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="painkiller">Painkiller</SelectItem>
-                      <SelectItem value="antibiotic">Antibiotic</SelectItem>
-                      <SelectItem value="vitamin">Vitamin</SelectItem>
+                      {categories.map((cat: Category) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FieldError errors={field.state.meta.errors} />
