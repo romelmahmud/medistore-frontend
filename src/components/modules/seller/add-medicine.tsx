@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/select";
 import * as z from "zod";
 
+import { createMedicine } from "@/actions/medicine.actions";
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { toast } from "sonner";
 
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
@@ -40,7 +41,6 @@ export const formSchema = z.object({
 });
 
 export function AddMedicineServer() {
-  const [uploading, setUploading] = useState(false);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -58,17 +58,28 @@ export function AddMedicineServer() {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
-      // const toastId = toast.loading("Adding medicine...");
-      // try {
-      //   // 🔗 Call your backend here
-      //   // await medicineService.create(value);
+      const medicineData = {
+        name: value.name,
+        description: value.description,
+        price: value.price,
+        stock: value.stock,
+        dosage: value.dosage,
+        categoryId: value.categoryId,
+        manufacturer: value.manufacturer,
+        imageUrl: value.imageUrl,
+        isActive: value.status === "ACTIVE" ? true : false,
+      };
 
-      //   toast.success("Medicine added successfully", { id: toastId });
-      //   form.reset();
-      // } catch (error) {
-      //   toast.error("Failed to add medicine", { id: toastId });
-      // }
+      console.log(medicineData);
+      const toastId = toast.loading("Adding medicine...");
+      try {
+        const res = await createMedicine(medicineData);
+        console.log(res);
+        toast.success("Medicine added successfully", { id: toastId });
+        form.reset();
+      } catch (error) {
+        toast.error("Failed to add medicine", { id: toastId });
+      }
     },
   });
 

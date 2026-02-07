@@ -28,6 +28,21 @@ export type MedicineReturnType = {
   category: Category;
 };
 
+export type MedicineAddType = {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  manufacturer: string;
+  dosage: string;
+  imageUrl: string;
+  categoryId: string;
+  isActive: boolean;
+
+  // manufactureDate?: string; // ISO string
+  // expireDate?: string; // ISO string
+};
+
 export type GetMedicinesParams = {
   search?: string;
   manufacturer?: string;
