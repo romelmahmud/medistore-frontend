@@ -1,5 +1,5 @@
 import { getCategories } from "@/actions/category.actions";
-import { AddMedicineServer } from "@/components/modules/seller/add-medicine";
+import { AddMedicineForm } from "@/components/modules/seller/add-medicine";
 type Category = {
   id: string;
   name: string;
@@ -13,7 +13,7 @@ const AddMedicine = async () => {
 
   return (
     <div>
-      <AddMedicineServer categories={categoriesData} />
+      <AddMedicineForm categories={categoriesData} />
     </div>
   );
 };

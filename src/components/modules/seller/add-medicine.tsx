@@ -41,7 +41,7 @@ export const formSchema = z.object({
   status: z.enum(["ACTIVE", "INACTIVE"]),
 });
 
-export function AddMedicineServer({ categories }: any) {
+export function AddMedicineForm({ categories }: any) {
   const form = useForm({
     defaultValues: {
       name: "",
@@ -75,7 +75,12 @@ export function AddMedicineServer({ categories }: any) {
       const toastId = toast.loading("Adding medicine...");
       try {
         const res = await createMedicine(medicineData);
-        console.log(res);
+
+        if (res.error) {
+          toast.error("Failed to add medicine", { id: toastId });
+
+          return;
+        }
         toast.success("Medicine added successfully", { id: toastId });
         form.reset();
       } catch (error) {
