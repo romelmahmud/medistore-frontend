@@ -23,15 +23,15 @@ export default function MedicineTableWrapper({
     return () => clearTimeout(timeout);
   }, [searchParams.toString()]);
 
-  return (
-    <table className="w-full">
-      <tbody>
-        {isLoading ? (
+  if (isLoading) {
+    return (
+      <table className="w-full">
+        <tbody>
           <MedicineTableSkeletonRows />
-        ) : (
-          <MedicineTable medicineData={medicineData} />
-        )}
-      </tbody>
-    </table>
-  );
+        </tbody>
+      </table>
+    );
+  }
+
+  return <MedicineTable medicineData={medicineData} />;
 }
