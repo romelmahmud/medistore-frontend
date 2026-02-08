@@ -46,18 +46,18 @@ export function AddMedicineForm({ categories, data, mode }: any) {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
-      name: data.name || "",
-      description: data.description || "",
-      price: data.price || 0,
-      stock: data.stock || 0,
-      dosage: data.dosage || "",
-      categoryId: data.categoryId || "",
-      manufacturer: data.manufacturer || "",
-      imageUrl: data.imageUrl || "",
+      name: data?.name || "",
+      description: data?.description || "",
+      price: data?.price || 0,
+      stock: data?.stock || 0,
+      dosage: data?.dosage || "",
+      categoryId: data?.categoryId || "",
+      manufacturer: data?.manufacturer || "",
+      imageUrl: data?.imageUrl || "",
       status:
-        data.isActive === true
+        data?.isActive === true
           ? "ACTIVE"
-          : data.isActive === false
+          : data?.isActive === false
             ? "INACTIVE"
             : "ACTIVE",
     },
