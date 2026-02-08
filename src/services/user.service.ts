@@ -68,5 +68,36 @@ const getAllUsers = async () => {
     };
   }
 };
+const updateUserStatus = async (
+  userId: string,
+  status: "ACTIVE" | "BANNED",
+) => {
+  try {
+    const cookieStore = await cookies();
+    const res = await fetch(`${API_URL}/users/${userId}/status`, {
+      method: "PATCH",
+      headers: {
+        Cookie: cookieStore.toString(),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    });
+    const data = await res.json();
 
-export const userService = { getSession, getAllUsers };
+    if (data.success) {
+      return {
+        data: data.data,
+        error: null,
+      };
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        message: "Something went wrong",
+      },
+    };
+  }
+};
+
+export const userService = { getSession, getAllUsers, updateUserStatus };

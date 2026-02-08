@@ -1,4 +1,5 @@
 "use client";
+import { updateUserStatus } from "@/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,13 +23,30 @@ import { toast } from "sonner";
 export default function UserActions({ user }: { user: UserReturnType }) {
   const [open, setOpen] = useState(false);
 
-  const handleDelete = async () => {
-    const toastId = toast.loading("Deleting user...");
-    console.log("User to delete:", user);
+  const message =
+    user.status === "ACTIVE"
+      ? " Are you sure you want to Banned this User? "
+      : "You are going to Activate this User? ";
+
+  const handleBan = async () => {
+    const toastId = toast.loading(
+      user.status === "ACTIVE" ? "Banning user..." : "Activating user...",
+    );
+
     try {
-      toast.success("User deleted successfully", { id: toastId });
+      await updateUserStatus(
+        user.id,
+        user.status === "ACTIVE" ? "BANNED" : "ACTIVE",
+      );
+
+      toast.success(
+        user.status === "ACTIVE"
+          ? "User banned successfully"
+          : "User activated successfully",
+        { id: toastId },
+      );
     } catch (error) {
-      toast.error("Failed to delete", { id: toastId });
+      toast.error("Failed to update user status", { id: toastId });
     }
 
     setOpen(false);
@@ -47,7 +65,7 @@ export default function UserActions({ user }: { user: UserReturnType }) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem
             className="cursor-pointer"
-            variant="destructive"
+            variant={user.status === "ACTIVE" ? "destructive" : "default"}
             onClick={() => setOpen(true)}
           >
             {user.status === "ACTIVE" ? "Ban User" : "Activate User"}
@@ -59,18 +77,20 @@ export default function UserActions({ user }: { user: UserReturnType }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogTitle>
+              {user.status === "ACTIVE" ? "Ban User" : "Activate User"}
+            </DialogTitle>
           </DialogHeader>
-          <p>
-            Are you sure you want to delete this medicine? This action cannot be
-            undone.
-          </p>
+          <p>{message}</p>
           <DialogFooter className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDelete}>
-              Delete
+            <Button
+              variant={user.status === "ACTIVE" ? "destructive" : "secondary"}
+              onClick={handleBan}
+            >
+              {user.status === "ACTIVE" ? "Ban User" : "Activate User"}
             </Button>
           </DialogFooter>
         </DialogContent>
