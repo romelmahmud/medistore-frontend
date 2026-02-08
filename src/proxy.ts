@@ -25,6 +25,13 @@ export const proxy = async (req: NextRequest) => {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  // Admin-only routes
+  const adminRoutes = ["/dashboard/users", "/dashboard/categories"];
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+  if (isAdminRoute && role !== Roles.admin) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   // Customer-only routes
   const customerRoutes = ["/cart", "/checkout", "/orders"];
   const isCustomerRoute = customerRoutes.some((route) =>
@@ -45,5 +52,7 @@ export const config = {
     "/checkout/:path*",
     "/orders/:path*",
     "/profile/:path*",
+    "/dashboard/users/:path*",
+    "/dashboard/categories/:path*",
   ],
 };
