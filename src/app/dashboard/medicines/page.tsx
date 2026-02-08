@@ -1,6 +1,6 @@
 import { getCategories } from "@/actions/category.actions";
 import MedicineFilters from "@/components/modules/dashboard/medicine/medicine-filter";
-import MedicineTable from "@/components/modules/dashboard/medicine/medicine-table";
+import MedicineTableWrapper from "@/components/modules/dashboard/medicine/medicine-table-wrapper";
 import PaginationControls from "@/components/ui/pagination-controls";
 import { medicineService } from "@/services/medicine.service";
 import Link from "next/link";
@@ -45,7 +45,7 @@ const MedicinePage = async ({
       </div>
 
       <div className="overflow-x-auto max-w-7xl mx-auto mt-12 border rounded-md">
-        <MedicineTable medicineData={medicineData} />
+        <MedicineTableWrapper medicineData={medicineData} />
       </div>
       <div className=" max-w-7xl mx-auto">
         <PaginationControls meta={pagination} />
