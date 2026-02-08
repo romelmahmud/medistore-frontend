@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/select";
 import * as z from "zod";
 
-import { createMedicine } from "@/actions/medicine.actions";
+import { createMedicine, updateMedicine } from "@/actions/medicine.actions";
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 type Category = {
@@ -41,18 +42,19 @@ export const formSchema = z.object({
   status: z.enum(["ACTIVE", "INACTIVE"]),
 });
 
-export function AddMedicineForm({ categories }: any) {
+export function AddMedicineForm({ categories, data, mode }: any) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
-      name: "",
-      description: "",
-      price: 0,
-      stock: 0,
-      dosage: "",
-      categoryId: "",
-      manufacturer: "",
-      imageUrl: "",
-      status: "ACTIVE",
+      name: data.name || "",
+      description: data.description || "",
+      price: data.price || 0,
+      stock: data.stock || 0,
+      dosage: data.dosage || "",
+      categoryId: data.categoryId || "",
+      manufacturer: data.manufacturer || "",
+      imageUrl: data.imageUrl || "",
+      status: data.status || "ACTIVE",
     },
 
     validators: {
@@ -71,28 +73,54 @@ export function AddMedicineForm({ categories }: any) {
         isActive: value.status === "ACTIVE" ? true : false,
       };
 
-      console.log(medicineData);
-      const toastId = toast.loading("Adding medicine...");
+      const toastId = toast.loading(
+        mode ? "Updating medicine..." : "Adding medicine",
+      );
       try {
-        const res = await createMedicine(medicineData);
+        let res;
+        if (mode === "edit") {
+          res = await updateMedicine(data.id, medicineData);
+        } else {
+          res = await createMedicine(medicineData);
+        }
 
         if (res.error) {
-          toast.error("Failed to add medicine", { id: toastId });
+          toast.error(
+            mode ? "Failed to Update medicine..." : "Failed to Add medicine",
+            { id: toastId },
+          );
 
           return;
         }
-        toast.success("Medicine added successfully", { id: toastId });
-        form.reset();
+        router.push("/dashboard/medicines");
+        toast.success(
+          mode
+            ? "Medicine updated successfully"
+            : "Medicine added successfully",
+          { id: toastId },
+        );
+        if (!mode) {
+          form.reset();
+        }
       } catch (error) {
-        toast.error("Failed to add medicine", { id: toastId });
+        toast.error(
+          mode ? "Failed to Update medicine..." : "Failed to Add medicine",
+          { id: toastId },
+        );
       }
     },
   });
+  const getButtonLabel = () => {
+    if (form.state.isSubmitting) {
+      return mode === "edit" ? "Updating..." : "Saving...";
+    }
+    return mode === "edit" ? "Update Medicine" : "Add Medicine";
+  };
 
   return (
     <Card className="max-w-5xl mx-auto mt-5">
       <CardHeader>
-        <CardTitle>Add Medicine</CardTitle>
+        <CardTitle>{mode ? "Edit medicine" : "Add medicine"}</CardTitle>
       </CardHeader>
 
       <CardContent>
@@ -251,9 +279,9 @@ export function AddMedicineForm({ categories }: any) {
           <Button
             type="submit"
             disabled={!form.state.canSubmit || form.state.isSubmitting}
-            className="w-full md:w-1/2"
+            className="w-full md:w-1/2 cursor-pointer"
           >
-            {form.state.isSubmitting ? "Saving..." : "Add Medicine"}
+            {getButtonLabel()}
           </Button>
         </form>
       </CardContent>

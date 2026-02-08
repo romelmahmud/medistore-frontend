@@ -1,5 +1,6 @@
 import { env } from "@/env";
 import { GetMedicinesParams, MedicineAddType, ServiceOptions } from "@/types";
+import { MedicineUpdateType } from "@/types/medicine.type";
 
 import { cookies } from "next/headers";
 
@@ -107,8 +108,46 @@ const createMedicine = async (medicineData: MedicineAddType) => {
   }
 };
 
+const updateMedicine = async (id: string, medicineData: MedicineUpdateType) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/medicines/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify(medicineData),
+      next: {
+        tags: ["update-medicine"],
+      },
+    });
+    const data = await res.json();
+    if (data.error) {
+      return {
+        data: null,
+        error: {
+          message: data.error || "Error: Post not created",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
 export const medicineService = {
   getMedicines,
   getMedicineById,
   createMedicine,
+  updateMedicine,
 };

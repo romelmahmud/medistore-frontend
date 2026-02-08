@@ -5,6 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LinkButton } from "@/components/ui/link-button";
 import {
   Table,
   TableBody,
@@ -59,7 +60,13 @@ export default function MedicineTable({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem className="cursor-pointer">
-                    Edit
+                    <LinkButton
+                      href={`/dashboard/medicines/edit-medicine/${medicine.id}`}
+                      variant="ghost"
+                      className="w-full justify-start"
+                    >
+                      Edit
+                    </LinkButton>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem

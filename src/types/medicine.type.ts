@@ -55,3 +55,15 @@ export type GetMedicinesParams = {
   sortBy?: string;
   sortOrder?: string;
 };
+
+export type MedicineUpdateType = {
+  name?: string;
+  description?: string;
+  price?: number;
+  stock?: number;
+  manufacturer?: string;
+  dosage?: string;
+  imageUrl?: string;
+  categoryId?: string;
+  isActive?: boolean;
+};
