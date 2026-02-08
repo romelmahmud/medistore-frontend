@@ -63,9 +63,10 @@ export default function CategoryList({ categories }: CategoryListProps) {
           </CardHeader>
 
           <CardContent className="space-y-4">
-            {/* <p className="text-sm text-muted-foreground line-clamp-2">
-              {category.description || "No description provided"}
-            </p> */}
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {category.description?.slice(0, 100) || "No description provided"}
+              .
+            </p>
 
             <div className="flex justify-end gap-2 items-center">
               {/* Edit */}
