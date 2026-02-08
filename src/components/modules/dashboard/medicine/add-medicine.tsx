@@ -54,7 +54,12 @@ export function AddMedicineForm({ categories, data, mode }: any) {
       categoryId: data.categoryId || "",
       manufacturer: data.manufacturer || "",
       imageUrl: data.imageUrl || "",
-      status: data.status || "ACTIVE",
+      status:
+        data.isActive === true
+          ? "ACTIVE"
+          : data.isActive === false
+            ? "INACTIVE"
+            : "ACTIVE",
     },
 
     validators: {
