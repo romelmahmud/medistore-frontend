@@ -1,11 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { LinkButton } from "@/components/ui/link-button";
 import {
   Table,
   TableBody,
@@ -15,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MedicineReturnType } from "@/types";
-import { MoreHorizontalIcon } from "lucide-react";
+import MedicineActions from "./medicine-action";
 
 export default function MedicineTable({
   medicineData,
@@ -51,32 +43,7 @@ export default function MedicineTable({
               {medicine.isActive ? "Active" : "Inactive"}
             </TableCell>
             <TableCell className="text-right">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="size-8">
-                    <MoreHorizontalIcon />
-                    <span className="sr-only">Open menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem className="cursor-pointer">
-                    <LinkButton
-                      href={`/dashboard/medicines/edit-medicine/${medicine.id}`}
-                      variant="ghost"
-                      className="w-full justify-start"
-                    >
-                      Edit
-                    </LinkButton>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    variant="destructive"
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <MedicineActions medicineId={medicine.id} />
             </TableCell>
           </TableRow>
         ))}

@@ -91,7 +91,7 @@ const createMedicine = async (medicineData: MedicineAddType) => {
       return {
         data: null,
         error: {
-          message: data.error || "Error: Post not created",
+          message: data.error || "Error: Medicine not created",
         },
       };
     }
@@ -128,7 +128,40 @@ const updateMedicine = async (id: string, medicineData: MedicineUpdateType) => {
       return {
         data: null,
         error: {
-          message: data.error || "Error: Post not created",
+          message: data.error || "Error: Medicine not updated",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
+const deleteMedicine = async (id: string) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/medicines/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+    });
+    const data = await res.json();
+    if (data.error) {
+      return {
+        data: null,
+        error: {
+          message: data.error || "Error: Medicine not deleted",
         },
       };
     }
@@ -150,4 +183,5 @@ export const medicineService = {
   getMedicineById,
   createMedicine,
   updateMedicine,
+  deleteMedicine,
 };

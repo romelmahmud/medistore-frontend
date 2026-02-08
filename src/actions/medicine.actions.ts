@@ -21,6 +21,11 @@ export const updateMedicine = async (
   medicineData: MedicineUpdateType,
 ) => {
   const res = await medicineService.updateMedicine(id, medicineData);
-  revalidateTag("update-medicine", "max");
+  revalidateTag("medicines", "max");
+  return res;
+};
+export const deleteMedicine = async (id: string) => {
+  const res = await medicineService.deleteMedicine(id);
+  revalidateTag("medicines", "max");
   return res;
 };
