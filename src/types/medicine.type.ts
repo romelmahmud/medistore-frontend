@@ -47,6 +47,11 @@ export type GetMedicinesParams = {
   search?: string;
   manufacturer?: string;
   category?: string;
-  minPrice?: number;
-  maxPrice?: number;
+  minPrice?: string;
+  maxPrice?: string;
+  isActive?: string;
+  page?: string;
+  limit?: string;
+  sortBy?: string;
+  sortOrder?: string;
 };

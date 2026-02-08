@@ -34,6 +34,7 @@ const getMedicines = async (
 
     if (data.success) {
       return {
+        meta: data.meta,
         data: data.data,
         error: null,
       };
