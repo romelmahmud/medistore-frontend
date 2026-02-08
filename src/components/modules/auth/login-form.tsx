@@ -54,10 +54,11 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           setUser(loggedInUser);
           toast.success("Logged in successfully", { id: toastId });
           // Redirect based on role
-          if (loggedInUser.role === "ADMIN") router.replace("/admin/dashboard");
-          else if (loggedInUser.role === "SELLER")
-            router.replace("/seller/dashboard");
-          else router.replace("/");
+          if (loggedInUser.role === "ADMIN" || loggedInUser.role === "SELLER") {
+            router.replace("/dashboard");
+          } else {
+            router.replace("/");
+          }
         }
       } catch (error) {
         toast.error("Failed to log in", { id: toastId });

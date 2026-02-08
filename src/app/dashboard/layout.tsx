@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { ModeToggle } from "@/components/layout/ModeTogle";
 import {
   SidebarInset,
   SidebarProvider,
@@ -6,23 +7,19 @@ import {
 } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
-  admin,
-  seller,
+  children,
 }: Readonly<{
-  admin: React.ReactNode;
-  seller: React.ReactNode;
+  children: React.ReactNode;
 }>) {
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-8 shrink-0 items-center gap-2 border-b px-4">
+        <header className="flex h-12 shrink-0 items-center gap-2 border-b px-4 justify-between">
           <SidebarTrigger className="-ml-1" />
+          <ModeToggle />
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          {admin}
-          {seller}
-        </div>
+        <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

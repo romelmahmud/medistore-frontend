@@ -10,28 +10,23 @@ export const proxy = async (req: NextRequest) => {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
+  if (data && pathname.startsWith("/profile")) {
+    return NextResponse.next();
+  }
+
   const role = data.user.role;
 
-  // Role-to-role smart redirects
-  if (pathname.startsWith("/admin") && role === Roles.seller) {
-    return NextResponse.redirect(new URL("/seller/dashboard", req.url));
-  }
-
-  if (pathname.startsWith("/seller") && role === Roles.admin) {
-    return NextResponse.redirect(new URL("/admin/dashboard", req.url));
-  }
-
   // Admin & Seller guards
-  if (pathname.startsWith("/admin") && role !== Roles.admin) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  if (pathname.startsWith("/seller") && role !== Roles.seller) {
+  if (
+    pathname.startsWith("/dashboard") &&
+    role !== Roles.admin &&
+    role !== Roles.seller
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
   // Customer-only routes
-  const customerRoutes = ["/cart", "/checkout", "/orders", "/profile"];
+  const customerRoutes = ["/cart", "/checkout", "/orders"];
   const isCustomerRoute = customerRoutes.some((route) =>
     pathname.startsWith(route),
   );
@@ -45,8 +40,7 @@ export const proxy = async (req: NextRequest) => {
 
 export const config = {
   matcher: [
-    "/admin/:path*",
-    "/seller/:path*",
+    "/dashboard/:path*",
     "/cart/:path*",
     "/checkout/:path*",
     "/orders/:path*",

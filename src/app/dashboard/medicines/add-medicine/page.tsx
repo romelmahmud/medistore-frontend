@@ -1,5 +1,5 @@
 import { getCategories } from "@/actions/category.actions";
-import { AddMedicineForm } from "@/components/modules/seller/add-medicine";
+import { AddMedicineForm } from "@/components/modules/dashboard/add-medicine";
 type Category = {
   id: string;
   name: string;

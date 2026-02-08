@@ -5,9 +5,6 @@ import * as React from "react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -15,8 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Roles } from "@/constants/roles";
 import { useUser } from "@/context/user.context";
-import { adminRoutes } from "@/routes/adminRoutes";
-import { sellerRoutes } from "@/routes/sellerRoutes";
+import { dashboardRoutes } from "@/routes/dashboardRoutes";
 import { Route } from "@/types";
 import Link from "next/link";
 
@@ -27,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
+import { adminRoutes } from "@/routes/adminRoutes";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -34,17 +31,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user, setUser } = useUser();
   const router = useRouter();
-  let routes: Route[] = [];
+  let routes: Route[] = [...dashboardRoutes];
 
   switch (user?.role) {
     case Roles.admin:
-      routes = adminRoutes;
+      routes = [...routes, ...adminRoutes];
       break;
-    case Roles.seller:
-      routes = sellerRoutes;
-      break;
+
     default:
-      routes = [];
+      routes = [...dashboardRoutes];
       break;
   }
   const handleLogout = async () => {
@@ -76,22 +71,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </Link>
         </div>
         <hr />
-        {/* We create a SidebarGroup for each parent. */}
-        {routes.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.url}>{item.title}</Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+
+        {routes.map((item: Route) => (
+          <SidebarMenu key={item.title} className="pl-4">
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href={item.url}>{item.title}</Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         ))}
       </SidebarContent>
       <hr className="my-1" />
