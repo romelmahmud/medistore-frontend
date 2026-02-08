@@ -27,6 +27,7 @@ import { adminRoutes } from "@/routes/adminRoutes";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { LinkButton } from "../ui/link-button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user, setUser } = useUser();
@@ -76,7 +77,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu key={item.title} className="pl-4">
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href={item.url}>{item.title}</Link>
+                <LinkButton
+                  href={item.url}
+                  variant="ghost"
+                  className="w-full justify-start"
+                >
+                  {item.title}
+                </LinkButton>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

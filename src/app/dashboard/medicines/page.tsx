@@ -1,9 +1,9 @@
 import { getCategories } from "@/actions/category.actions";
 import MedicineFilters from "@/components/modules/dashboard/medicine/medicine-filter";
 import MedicineTableWrapper from "@/components/modules/dashboard/medicine/medicine-table-wrapper";
+import { LinkButton } from "@/components/ui/link-button";
 import PaginationControls from "@/components/ui/pagination-controls";
 import { medicineService } from "@/services/medicine.service";
-import Link from "next/link";
 
 const MedicinePage = async ({
   searchParams,
@@ -30,12 +30,10 @@ const MedicinePage = async ({
     <div>
       <div className="flex items-center justify-between mb-4 pr-5 max-w-7xl mx-auto">
         <h1 className="text-3xl font-semibold">Medicine</h1>
-        <Link
-          href="/dashboard/medicines/add-medicine"
-          className="btn btn-outline border rounded-md py-2 px-4"
-        >
+
+        <LinkButton href="/dashboard/medicines/add-medicine" variant="outline">
           Add Medicine
-        </Link>
+        </LinkButton>
       </div>
       <div className=" max-w-7xl mx-auto">
         <MedicineFilters
