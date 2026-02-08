@@ -1,3 +1,5 @@
+import { getCategories } from "@/actions/category.actions";
+import MedicineFilters from "@/components/modules/dashboard/medicine/medicine-filter";
 import MedicineTable from "@/components/modules/dashboard/medicine/medicine-table";
 import PaginationControls from "@/components/ui/pagination-controls";
 import { medicineService } from "@/services/medicine.service";
@@ -6,13 +8,18 @@ import Link from "next/link";
 const MedicinePage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) => {
-  const { page } = await searchParams;
+  const params = await searchParams;
+
   const { data: medicineData, meta }: any = await medicineService.getMedicines({
-    page,
+    ...params,
   });
-  console.log(meta);
+  const manufacturers = Array.from(
+    new Set(medicineData?.map((medicine: any) => medicine.manufacturer)),
+  ) as string[];
+  const categories = await getCategories();
+
   const pagination = meta || {
     limit: 10,
     page: 1,
@@ -29,6 +36,12 @@ const MedicinePage = async ({
         >
           Add Medicine
         </Link>
+      </div>
+      <div className=" max-w-7xl mx-auto">
+        <MedicineFilters
+          categories={categories?.data}
+          manufacturers={manufacturers}
+        />
       </div>
 
       <div className="overflow-x-auto max-w-7xl mx-auto mt-12 border rounded-md">
