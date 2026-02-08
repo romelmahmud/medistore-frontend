@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,9 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
+type ActionType = "apply" | "reset" | null;
 interface MedicineFiltersProps {
   categories: { id: string; name: string }[];
   manufacturers: string[];
@@ -23,6 +24,8 @@ export default function MedicineFilters({
 }: MedicineFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+  const [activeAction, setActiveAction] = useState<ActionType>(null);
 
   const [filters, setFilters] = useState({
     search: searchParams.get("search") ?? "",
@@ -36,30 +39,40 @@ export default function MedicineFilters({
   });
 
   const applyFilters = () => {
-    const params = new URLSearchParams();
+    setActiveAction("apply");
+    startTransition(() => {
+      const params = new URLSearchParams();
 
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) params.set(key, value);
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.set(key, value);
+      });
+
+      params.set("page", "1");
+      router.push(`?${params.toString()}`);
     });
-
-    params.set("page", "1"); // reset page on filter
-
-    router.push(`?${params.toString()}`);
   };
-
   const resetFilters = () => {
-    setFilters({
-      search: "",
-      category: "",
-      manufacturer: "",
-      minPrice: "",
-      maxPrice: "",
-      isActive: "",
-      sortBy: "createdAt",
-      sortOrder: "desc",
+    setActiveAction("reset");
+    startTransition(() => {
+      setFilters({
+        search: "",
+        category: "",
+        manufacturer: "",
+        minPrice: "",
+        maxPrice: "",
+        isActive: "",
+        sortBy: "createdAt",
+        sortOrder: "desc",
+      });
+
+      router.push("/dashboard/medicines");
     });
-    router.push("/dashboard/medicines");
   };
+  useEffect(() => {
+    if (!isPending) {
+      setActiveAction(null);
+    }
+  }, [isPending]);
 
   return (
     <div
@@ -68,6 +81,7 @@ export default function MedicineFilters({
     >
       {/* Search */}
       <Input
+        disabled={isPending}
         placeholder="Search medicine..."
         value={filters.search}
         onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
@@ -76,6 +90,7 @@ export default function MedicineFilters({
       {/* Category */}
       <Select
         value={filters.category}
+        disabled={isPending}
         onValueChange={(value) =>
           setFilters((f) => ({ ...f, category: value }))
         }
@@ -95,6 +110,7 @@ export default function MedicineFilters({
       {/* Manufacturer */}
       <Select
         value={filters.manufacturer}
+        disabled={isPending}
         onValueChange={(value) =>
           setFilters((f) => ({ ...f, manufacturer: value }))
         }
@@ -114,6 +130,7 @@ export default function MedicineFilters({
       {/* Min Price */}
       <Input
         type="number"
+        disabled={isPending}
         placeholder="Min Price"
         value={filters.minPrice}
         onChange={(e) =>
@@ -124,6 +141,7 @@ export default function MedicineFilters({
       {/* Max Price */}
       <Input
         type="number"
+        disabled={isPending}
         placeholder="Max Price"
         value={filters.maxPrice}
         onChange={(e) =>
@@ -134,6 +152,7 @@ export default function MedicineFilters({
       {/* Status */}
       <Select
         value={filters.isActive}
+        disabled={isPending}
         onValueChange={(value) =>
           setFilters((f) => ({ ...f, isActive: value }))
         }
@@ -150,6 +169,7 @@ export default function MedicineFilters({
       {/* Sort By */}
       <Select
         value={filters.sortBy}
+        disabled={isPending}
         onValueChange={(value) => setFilters((f) => ({ ...f, sortBy: value }))}
       >
         <SelectTrigger>
@@ -165,6 +185,7 @@ export default function MedicineFilters({
       {/* Sort Order */}
       <Select
         value={filters.sortOrder}
+        disabled={isPending}
         onValueChange={(value) =>
           setFilters((f) => ({ ...f, sortOrder: value }))
         }
@@ -180,8 +201,17 @@ export default function MedicineFilters({
 
       {/* Actions */}
       <div className="flex gap-2">
-        <Button onClick={applyFilters}>Apply</Button>
-        <Button variant="outline" onClick={resetFilters}>
+        <Button onClick={applyFilters} disabled={isPending}>
+          {isPending && activeAction === "apply" && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Apply
+        </Button>
+
+        <Button variant="outline" onClick={resetFilters} disabled={isPending}>
+          {isPending && activeAction === "reset" && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
           Reset
         </Button>
       </div>
