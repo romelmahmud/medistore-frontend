@@ -2,6 +2,7 @@ import { env } from "@/env";
 import { cookies } from "next/headers";
 
 const AUTH_URL = env.AUTH_URL;
+const API_URL = env.API_URL;
 
 const getSession = async () => {
   try {
@@ -38,4 +39,34 @@ const getSession = async () => {
   }
 };
 
-export const userService = { getSession };
+const getAllUsers = async () => {
+  try {
+    const cookieStore = await cookies();
+    const res = await fetch(`${API_URL}/users`, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      next: {
+        tags: ["users"],
+      },
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      return {
+        meta: data.meta,
+        data: data.data,
+        error: null,
+      };
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        message: "Something went wrong",
+      },
+    };
+  }
+};
+
+export const userService = { getSession, getAllUsers };
