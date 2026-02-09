@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
@@ -7,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { AddToCartButton } from "./add-to-cart-button";
 
 export function MedicineCard({ medicine }: any) {
   return (
@@ -34,7 +34,7 @@ export function MedicineCard({ medicine }: any) {
         </Link>
       </CardHeader>
       <CardFooter>
-        <Button className="w-full">Add to Cart</Button>
+        <AddToCartButton medicine={medicine} />
       </CardFooter>
     </Card>
   );

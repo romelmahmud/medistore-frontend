@@ -24,6 +24,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import CartButton from "../modules/shop/cart-trigger-button";
+import { LinkButton } from "../ui/link-button";
 import { ModeToggle } from "./ModeTogle";
 
 interface MenuItem {
@@ -92,12 +94,12 @@ export default function Navbar({
 
             {/* Dashboard Link only for Admin/Seller */}
             {isDashboardUser && (
-              <Link
-                href={`/dashboard`}
-                className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium bg-accent text-accent-foreground hover:bg-accent/90"
+              <LinkButton
+                href="/dashboard"
+                className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer"
               >
                 Dashboard
-              </Link>
+              </LinkButton>
             )}
           </div>
         </div>
@@ -116,25 +118,28 @@ export default function Navbar({
               </Button>
             </>
           ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="w-10 h-10 cursor-pointer">
-                  {user?.image ? (
-                    <AvatarImage src={user?.image} alt={user.name} />
-                  ) : (
-                    <AvatarFallback>{user.name[0]}</AvatarFallback>
-                  )}
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                  <Link href="/profile">Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <>
+              <CartButton />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-10 h-10 cursor-pointer">
+                    {user?.image ? (
+                      <AvatarImage src={user?.image} alt={user.name} />
+                    ) : (
+                      <AvatarFallback>{user.name[0]}</AvatarFallback>
+                    )}
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
           )}
 
           {/* Mobile Menu */}

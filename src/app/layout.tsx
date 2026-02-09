@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/context/cart.context";
 import { UserProvider } from "@/context/user.context";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
@@ -37,8 +38,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <UserProvider>
-            {children}
-            <Toaster richColors />
+            <CartProvider>
+              {children}
+              <Toaster richColors />
+            </CartProvider>
           </UserProvider>
         </ThemeProvider>
       </body>

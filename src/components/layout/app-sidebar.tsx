@@ -80,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <LinkButton
                   href={item.url}
                   variant="ghost"
-                  className="w-full justify-start"
+                  className="w-full justify-start cursor-pointer"
                 >
                   {item.title}
                 </LinkButton>

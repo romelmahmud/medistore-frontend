@@ -1,3 +1,4 @@
+export type { CartItemType } from "./cart.type";
 export type { CategoryUpdateType } from "./category.type";
 export type {
   GetMedicinesParams,
