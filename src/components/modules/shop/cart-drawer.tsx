@@ -23,7 +23,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:w-[400px]">
+      <SheetContent side="right" className="w-full sm:w-[400px] p-2">
         <SheetHeader>
           <SheetTitle>My Cart ({totalItems})</SheetTitle>
         </SheetHeader>
@@ -55,6 +55,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                   <Button
                     size="icon"
                     variant="outline"
+                    className="cursor-pointer"
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                   >
                     <Minus size={14} />
@@ -65,6 +66,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                   <Button
                     size="icon"
                     variant="outline"
+                    className="cursor-pointer"
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   >
                     <Plus size={14} />
@@ -73,6 +75,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                   <Button
                     size="icon"
                     variant="ghost"
+                    className="cursor-pointer"
                     onClick={() => removeItem(item.id)}
                   >
                     <Trash2 size={16} className="text-red-500" />
@@ -91,7 +94,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
               <span>৳{totalPrice}</span>
             </div>
 
-            <Button className="w-full">Checkout</Button>
+            <Button className="w-full cursor-pointer">Checkout</Button>
           </div>
         )}
       </SheetContent>
