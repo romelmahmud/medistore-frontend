@@ -9,11 +9,11 @@ const AdminCategoriesPage = async () => {
       <div className="flex items-center justify-between mb-4 pr-5 max-w-7xl mx-auto mt-5">
         <h1 className="text-3xl font-semibold">Categories</h1>
         <LinkButton
-          href="/dashboard/medicines/add-category"
+          href="/dashboard/categories/create-category"
           variant="outline"
           className="cursor-pointer"
         >
-          Add Category
+          Create Category
         </LinkButton>
       </div>
 
