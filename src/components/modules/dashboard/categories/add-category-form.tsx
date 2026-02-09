@@ -13,8 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 
+import { createCategory, updateCategory } from "@/actions/category.actions";
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
+import { CategoryUpdateType } from "@/types";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -39,7 +41,7 @@ export function CreateCategoryForm({ data, mode }: any) {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const categoryData = {
+      const categoryData: CategoryUpdateType = {
         name: value.name,
         description: value.description,
 
@@ -49,38 +51,38 @@ export function CreateCategoryForm({ data, mode }: any) {
       const toastId = toast.loading(
         mode ? "Updating category..." : "Adding category",
       );
-      // try {
-      //   let res;
-      //   if (mode === "edit") {
-      //     res = await updateMedicine(data.id, medicineData);
-      //   } else {
-      //     res = await createMedicine(medicineData);
-      //   }
+      try {
+        let res;
+        if (mode === "edit") {
+          res = await updateCategory(data.id, categoryData);
+        } else {
+          res = await createCategory(categoryData);
+        }
 
-      //   if (res.error) {
-      //     toast.error(
-      //       mode ? "Failed to Update category..." : "Failed to Add category",
-      //       { id: toastId },
-      //     );
+        if (res.error) {
+          toast.error(
+            mode ? "Failed to Update category..." : "Failed to Add category",
+            { id: toastId },
+          );
 
-      //     return;
-      //   }
-      //   router.push("/dashboard/categories");
-      //   toast.success(
-      //     mode
-      //       ? "Category updated successfully"
-      //       : "Category added successfully",
-      //     { id: toastId },
-      //   );
-      //   if (!mode) {
-      //     form.reset();
-      //   }
-      // } catch (error) {
-      //   toast.error(
-      //     mode ? "Failed to Update category..." : "Failed to Add category",
-      //     { id: toastId },
-      //   );
-      // }
+          return;
+        }
+        router.push("/dashboard/categories");
+        toast.success(
+          mode
+            ? "Category updated successfully"
+            : "Category added successfully",
+          { id: toastId },
+        );
+        if (!mode) {
+          form.reset();
+        }
+      } catch (error) {
+        toast.error(
+          mode ? "Failed to Update category..." : "Failed to Add category",
+          { id: toastId },
+        );
+      }
     },
   });
   const getButtonLabel = () => {
@@ -135,7 +137,7 @@ export function CreateCategoryForm({ data, mode }: any) {
             </form.Field>
           </FieldGroup>
 
-          <FieldGroup className="flex flex-column md:flex-row">
+          <FieldGroup className="flex flex-column md:flex-row md:w-50">
             <ImageUpload form={form} />
           </FieldGroup>
 

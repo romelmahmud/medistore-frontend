@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteCategory } from "@/actions/category.actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export interface Category {
   id: string;
@@ -37,8 +39,18 @@ export default function CategoryList({ categories }: CategoryListProps) {
     );
   }
 
-  const onDelete = (categoryId: string) => {
-    // Handle delete action
+  const onDelete = async (categoryId: string) => {
+    const toastId = toast.loading("Deleting category...");
+    try {
+      const res = await deleteCategory(categoryId);
+      if (res.data.success !== true) {
+        toast.error("Category deletion error", { id: toastId });
+        return;
+      }
+      toast.success("Category deleted successfully", { id: toastId });
+    } catch (error) {
+      toast.error("Something happened", { id: toastId });
+    }
   };
 
   return (

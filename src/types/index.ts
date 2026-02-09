@@ -1,3 +1,4 @@
+export type { CategoryUpdateType } from "./category.type";
 export type {
   GetMedicinesParams,
   MedicineAddType,
