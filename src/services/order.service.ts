@@ -1,5 +1,6 @@
 import { env } from "@/env";
 import { CreateOrderInput } from "@/types";
+import { OrderStatus } from "@/types/order.type";
 import { cookies } from "next/headers";
 
 const API_URL = env.API_URL;
@@ -146,9 +147,44 @@ const getOrderById = async (orderId: string) => {
   }
 };
 
+const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/orders/${orderId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({ status }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.success === false) {
+      return {
+        data: null,
+        error: {
+          message: data.message || "Order status update failed",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
 export const orderService = {
   createOrder,
   getAllOrders,
   getCustomerOrders,
   getOrderById,
+  updateOrderStatus,
 };

@@ -3,6 +3,7 @@
 import { revalidateTags } from "@/lib/revalidateTags";
 import { orderService } from "@/services/order.service";
 import { CreateOrderInput } from "@/types";
+import { OrderStatus } from "@/types/order.type";
 
 export const createOrder = async (data: CreateOrderInput) => {
   const res = await orderService.createOrder(data);
@@ -28,5 +29,15 @@ export const getCustomerOrders = async (customerId: string) => {
 
 export const getOrderById = async (orderId: string) => {
   const res = await orderService.getOrderById(orderId);
+  return res;
+};
+
+export const updateOrderStatus = async (
+  orderId: string,
+  status: OrderStatus,
+) => {
+  const res = await orderService.updateOrderStatus(orderId, status);
+  const tagToRevalidate = ["orders", "customer-orders", "order-by-id"];
+  revalidateTags(tagToRevalidate);
   return res;
 };
