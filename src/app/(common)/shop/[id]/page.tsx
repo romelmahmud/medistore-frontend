@@ -1,7 +1,8 @@
+import { AddToCartButton } from "@/components/modules/shop/add-to-cart-button";
 import Reviews from "@/components/modules/shop/reviews";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { medicineService } from "@/services/medicine.service";
+import { CartItemType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +15,14 @@ const MedicineDetailsPage = async ({
 
   const medicineData = await medicineService.getMedicineById(id);
   const medicine = medicineData?.data;
-  console.log(medicine);
+  const cartData: CartItemType = {
+    id: medicine.id,
+    name: medicine.name,
+    price: medicine.price,
+    stock: medicine.stock,
+    quantity: 1,
+    imageUrl: medicine.imageUrl,
+  };
   return (
     <>
       <div className="container py-8">
@@ -49,9 +57,7 @@ const MedicineDetailsPage = async ({
 
             <p className="text-sm">Stock: {medicine?.stock}</p>
 
-            <Button size="lg" className="cursor-pointer">
-              Add to Cart
-            </Button>
+            <AddToCartButton medicine={cartData} />
           </div>
         </div>
       </div>
