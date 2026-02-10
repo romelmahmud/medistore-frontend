@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import {
   Sheet,
   SheetContent,
@@ -93,8 +94,9 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
               <span>Total</span>
               <span>৳{totalPrice}</span>
             </div>
-
-            <Button className="w-full cursor-pointer">Checkout</Button>
+            <LinkButton href="/checkout" className="w-full cursor-pointer">
+              Checkout
+            </LinkButton>
           </div>
         )}
       </SheetContent>
