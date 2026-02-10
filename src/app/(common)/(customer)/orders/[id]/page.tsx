@@ -1,5 +1,11 @@
-const CustomerSingleOrderPage = () => {
-  return <div>CustomerSingleOrderPage</div>;
+const CustomerSingleOrderPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+
+  return <div>CustomerSingleOrderPage: {id}</div>;
 };
 
 export default CustomerSingleOrderPage;

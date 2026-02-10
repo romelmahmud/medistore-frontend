@@ -38,6 +38,80 @@ const createOrder = async (orderData: CreateOrderInput) => {
   }
 };
 
+const getAllOrders = async () => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/orders`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      next: {
+        tags: ["orders"],
+      },
+    });
+    const data = await res.json();
+    if (!res.ok || data.success === false) {
+      return {
+        data: null,
+        error: {
+          message: data.message || "Orders not found",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
+const getCustomerOrders = async (customerId: string) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/orders/customer/${customerId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      next: {
+        tags: ["customer-orders"],
+      },
+    });
+    const data = await res.json();
+    if (!res.ok || data.success === false) {
+      return {
+        data: null,
+        error: {
+          message: data.message || "Orders not found",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
 export const orderService = {
   createOrder,
+  getAllOrders,
+  getCustomerOrders,
 };
