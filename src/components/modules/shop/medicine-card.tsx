@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { AddToCartButton } from "./add-to-cart-button";
 
-export function MedicineCard({ medicine }: any) {
+export function MedicineCard({ medicine, isCustomer }: any) {
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0  rounded rounded-5">
       <div className="absolute inset-0 z-30 aspect-video " />
@@ -34,7 +34,7 @@ export function MedicineCard({ medicine }: any) {
         </Link>
       </CardHeader>
       <CardFooter>
-        <AddToCartButton medicine={medicine} />
+        {isCustomer ?? <AddToCartButton medicine={medicine} />}
       </CardFooter>
     </Card>
   );

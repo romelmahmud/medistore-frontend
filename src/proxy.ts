@@ -38,9 +38,9 @@ export const proxy = async (req: NextRequest) => {
     pathname.startsWith(route),
   );
 
-  // if (isCustomerRoute && role !== Roles.customer) {
-  //   return NextResponse.redirect(new URL("/", req.url));
-  // }
+  if (isCustomerRoute && role !== Roles.customer) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
   return NextResponse.next();
 };
@@ -48,7 +48,6 @@ export const proxy = async (req: NextRequest) => {
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/cart/:path*",
     "/checkout/:path*",
     "/orders/:path*",
     "/profile/:path*",

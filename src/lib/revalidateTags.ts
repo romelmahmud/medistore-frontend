@@ -1,4 +1,3 @@
-// lib/revalidation.ts
 import { revalidateTag } from "next/cache";
 
 /**

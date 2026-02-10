@@ -1,3 +1,5 @@
+"use server";
+
 import { revalidateTags } from "@/lib/revalidateTags";
 import { orderService } from "@/services/order.service";
 import { CreateOrderInput } from "@/types";

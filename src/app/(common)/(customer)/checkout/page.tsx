@@ -3,6 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 
+import { createOrder } from "@/actions/order.actions";
 import CheckoutOrderSummary from "@/components/modules/order/checkoutOrderSummary";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCart } from "@/context/cart.context";
+import { userService } from "@/services/user.service";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const checkoutSchema = z.object({
   shippingAddress: z.string().min(10, "Address must be at least 10 characters"),
@@ -22,6 +27,8 @@ const checkoutSchema = z.object({
 });
 
 const CheckoutPage = () => {
+  const router = useRouter();
+  const { clearCart } = useCart();
   const form = useForm({
     defaultValues: {
       shippingAddress: "",
@@ -31,9 +38,12 @@ const CheckoutPage = () => {
       onSubmit: checkoutSchema,
     },
     onSubmit: async ({ value }) => {
+      const { data } = await userService.getSession();
+      const userId = data.user.id;
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      const payload = {
+      const orderData = {
+        userId,
         shippingAddress: value.shippingAddress,
         paymentMethod: value.paymentMethod,
         items: cart.map((item: any) => ({
@@ -43,13 +53,22 @@ const CheckoutPage = () => {
         })),
       };
 
-      console.log("ORDER PAYLOAD 👉", payload);
+      console.log("ORDER data:", orderData);
 
-      // TODO: POST to backend
-      // await api.post("/orders", payload);
+      const toastId = toast.loading("Creating Order....");
 
-      // Clear cart after success
-      // localStorage.removeItem("cart");
+      try {
+        const res = await createOrder(orderData);
+        if (res.error) {
+          toast.error("Failed to Create Order", { id: toastId });
+          return;
+        }
+        toast.success("Order creation successful");
+        localStorage.removeItem("cart");
+        clearCart();
+        router.push("/orders");
+      } catch (error) {}
+      toast.error("Failed to Create Order", { id: toastId });
     },
   });
 
@@ -112,7 +131,7 @@ const CheckoutPage = () => {
               )}
             </form.Field>
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full cursor-pointer">
               Place Order
             </Button>
           </form>
