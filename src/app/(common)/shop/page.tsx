@@ -1,6 +1,7 @@
 import { getCategories } from "@/actions/category.actions";
 import MedicineFilters from "@/components/modules/dashboard/medicine/medicine-filter";
 import { MedicineCard } from "@/components/modules/shop/medicine-card";
+import PaginationControls from "@/components/ui/pagination-controls";
 import { medicineService } from "@/services/medicine.service";
 
 const ShopPage = async ({
@@ -38,6 +39,9 @@ const ShopPage = async ({
         {medicineData.map((item: any) => (
           <MedicineCard key={item.id} medicine={item} />
         ))}
+      </div>
+      <div className=" max-w-7xl mx-auto">
+        <PaginationControls meta={pagination} />
       </div>
     </div>
   );
