@@ -16,11 +16,13 @@ type ActionType = "apply" | "reset" | null;
 interface MedicineFiltersProps {
   categories: { id: string; name: string }[];
   manufacturers: string[];
+  pageRoute: string;
 }
 
 export default function MedicineFilters({
   categories,
   manufacturers,
+  pageRoute,
 }: MedicineFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -65,7 +67,7 @@ export default function MedicineFilters({
         sortOrder: "desc",
       });
 
-      router.push("/dashboard/medicines");
+      router.push(pageRoute);
     });
   };
   useEffect(() => {

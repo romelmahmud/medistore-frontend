@@ -39,6 +39,7 @@ const MedicinePage = async ({
         <MedicineFilters
           categories={categories?.data}
           manufacturers={manufacturers}
+          pageRoute="/dashboard/medicines"
         />
       </div>
 
