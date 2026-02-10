@@ -1,4 +1,3 @@
-import { LinkButton } from "@/components/ui/link-button";
 import {
   Table,
   TableBody,
@@ -16,9 +15,9 @@ export default function AdminOrderTable({ orders }: { orders: any[] }) {
         <TableRow>
           <TableHead>Order ID</TableHead>
           <TableHead>Total</TableHead>
+          <TableHead>Address</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Date</TableHead>
-          <TableHead className="text-end pr-4">Action</TableHead>
         </TableRow>
       </TableHeader>
 
@@ -30,6 +29,7 @@ export default function AdminOrderTable({ orders }: { orders: any[] }) {
             </TableCell>
 
             <TableCell>৳{order.totalAmount}</TableCell>
+            <TableCell>{order.shippingAddress}</TableCell>
 
             <TableCell>
               <EditableOrderStatus order={order} />
@@ -37,14 +37,6 @@ export default function AdminOrderTable({ orders }: { orders: any[] }) {
 
             <TableCell>
               {new Date(order.createdAt).toLocaleDateString()}
-            </TableCell>
-
-            <TableCell className="text-center">
-              <div className="flex justify-end">
-                <LinkButton href={`/orders/${order.id}`} variant="outline">
-                  View Details
-                </LinkButton>
-              </div>
             </TableCell>
           </TableRow>
         ))}
