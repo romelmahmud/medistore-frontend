@@ -110,8 +110,45 @@ const getCustomerOrders = async (customerId: string) => {
   }
 };
 
+const getOrderById = async (orderId: string) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${API_URL}/orders/${orderId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      next: {
+        tags: ["order-by-id"],
+      },
+    });
+    const data = await res.json();
+    if (!res.ok || data.success === false) {
+      return {
+        data: null,
+        error: {
+          message: data.message || "Order not found",
+        },
+      };
+    }
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
+
 export const orderService = {
   createOrder,
   getAllOrders,
   getCustomerOrders,
+  getOrderById,
 };

@@ -40,9 +40,6 @@ export default function OrderTable({ orders }: { orders: any[] }) {
             </TableCell>
 
             <TableCell className="text-center">
-              {/* <Button asChild size="sm" variant="outline">
-                <Link href={`/orders/${order.id}`}>View Details</Link>
-              </Button> */}
               <div className="flex justify-end">
                 <LinkButton href={`/orders/${order.id}`} variant="outline">
                   View Details

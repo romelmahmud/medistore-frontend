@@ -42,13 +42,14 @@ export default function Navbar({
     { title: "Home", url: "/" },
     { title: "About", url: "/about" },
     { title: "Shop", url: "/shop" },
+    { title: "Orders", url: "/orders" },
   ],
 }: NavbarProps) {
   const { user, setUser } = useUser();
   const isDashboardUser =
     user?.role === Roles.admin || user?.role === Roles.seller;
   const userRole = user?.role?.toLowerCase();
-
+  const isCustomer = user?.role === Roles.customer;
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -82,15 +83,20 @@ export default function Navbar({
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex gap-4 items-center">
-            {menu.map((item) => (
-              <Link
-                key={item.title}
-                href={item.url}
-                className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium hover:bg-muted hover:text-accent-foreground"
-              >
-                {item.title}
-              </Link>
-            ))}
+            {menu.map((item) => {
+              // Hide Orders for non-customer
+              if (item.title === "Orders" && !isCustomer) return null;
+
+              return (
+                <Link
+                  key={item.title}
+                  href={item.url}
+                  className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium hover:bg-muted hover:text-accent-foreground"
+                >
+                  {item.title}
+                </Link>
+              );
+            })}
 
             {/* Dashboard Link only for Admin/Seller */}
             {isDashboardUser && (
@@ -172,15 +178,20 @@ export default function Navbar({
                     collapsible
                     className="flex flex-col gap-2"
                   >
-                    {menu.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.url}
-                        className="text-md font-semibold"
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
+                    {menu.map((item) => {
+                      // Hide Orders for non-customer
+                      if (item.title === "Orders" && !isCustomer) return null;
+
+                      return (
+                        <Link
+                          key={item.title}
+                          href={item.url}
+                          className="inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium hover:bg-muted hover:text-accent-foreground"
+                        >
+                          {item.title}
+                        </Link>
+                      );
+                    })}
                     {userRole && (
                       <Link
                         href={`/${user?.role}/dashboard`}
