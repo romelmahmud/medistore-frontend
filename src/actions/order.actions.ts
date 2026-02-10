@@ -7,7 +7,7 @@ import { CreateOrderInput } from "@/types";
 export const createOrder = async (data: CreateOrderInput) => {
   const res = await orderService.createOrder(data);
 
-  const tagToRevalidate = ["medicines", "orders"];
+  const tagToRevalidate = ["medicines"];
   revalidateTags(tagToRevalidate);
   return res;
 };

@@ -1,7 +1,9 @@
 import { AddToCartButton } from "@/components/modules/shop/add-to-cart-button";
 import Reviews from "@/components/modules/shop/reviews";
 import { Card, CardContent } from "@/components/ui/card";
+import { Roles } from "@/constants/roles";
 import { medicineService } from "@/services/medicine.service";
+import { userService } from "@/services/user.service";
 import { CartItemType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +13,9 @@ const MedicineDetailsPage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
+  const { data } = await userService.getSession();
+
+  const userRole = data.user.role;
   const { id } = await params;
 
   const medicineData = await medicineService.getMedicineById(id);
@@ -56,8 +61,11 @@ const MedicineDetailsPage = async ({
             <p className="text-sm">Manufacturer: {medicine?.manufacturer}</p>
 
             <p className="text-sm">Stock: {medicine?.stock}</p>
-
-            <AddToCartButton medicine={cartData} />
+            {userRole === Roles.customer ? (
+              <AddToCartButton medicine={cartData} />
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

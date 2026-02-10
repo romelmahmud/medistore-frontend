@@ -17,11 +17,11 @@ const createOrder = async (orderData: CreateOrderInput) => {
       body: JSON.stringify(orderData),
     });
     const data = await res.json();
-    if (data.error) {
+    if (!res.ok || data.success === false) {
       return {
         data: null,
         error: {
-          message: data.error || "Error: Order not created",
+          message: data.message || "Order not created",
         },
       };
     }
