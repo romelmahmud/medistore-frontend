@@ -1,5 +1,6 @@
 import { AddToCartButton } from "@/components/modules/shop/add-to-cart-button";
 import Reviews from "@/components/modules/shop/reviews";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Roles } from "@/constants/roles";
 import { medicineService } from "@/services/medicine.service";
@@ -70,7 +71,7 @@ const MedicineDetailsPage = async ({
         </div>
       </div>
       <div className="container border px-5 py-2 rounded-md">
-        <Reviews />
+        <Reviews medicineId={medicine.id} />
       </div>
     </>
   );
