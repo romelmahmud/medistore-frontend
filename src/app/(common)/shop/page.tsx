@@ -11,8 +11,8 @@ const ShopPage = async ({
   searchParams: Promise<Record<string, string | undefined>>;
 }) => {
   const { data } = await userService.getSession();
-
-  const userRole = data.user.role;
+  console.log(data);
+  let userRole: string = data?.user?.role || "GUEST";
 
   const params = await searchParams;
   const { data: medicineData, meta }: any = await medicineService.getMedicines({

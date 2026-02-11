@@ -16,7 +16,7 @@ const MedicineDetailsPage = async ({
 }) => {
   const { data } = await userService.getSession();
 
-  const userRole = data.user.role;
+  const userRole = data?.user?.role || "GUEST";
   const { id } = await params;
 
   const medicineData = await medicineService.getMedicineById(id);
