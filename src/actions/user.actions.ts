@@ -8,6 +8,12 @@ export const getUser = async () => {
   return data?.user;
 };
 
+export const getMe = async () => {
+  const res = await userService.getMe();
+  console.log("GET ME RES:", res);
+  return res;
+};
+
 export const getAllUsers = async () => {
   const res = await userService.getAllUsers();
   return res;

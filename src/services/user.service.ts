@@ -39,6 +39,28 @@ const getSession = async () => {
   }
 };
 
+const getMe = async () => {
+  try {
+    const res = await fetch(`${API_URL}/users/me`, {
+      credentials: "include", // ✅ very important
+      cache: "no-store",
+    });
+    const data = await res.json();
+    console.log("GET ME DATA:", data);
+
+    if (data.success) {
+      return data.data;
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        message: "Something went wrong",
+      },
+    };
+  }
+};
+
 const getAllUsers = async () => {
   try {
     const cookieStore = await cookies();
@@ -100,4 +122,4 @@ const updateUserStatus = async (
   }
 };
 
-export const userService = { getSession, getAllUsers, updateUserStatus };
+export const userService = { getSession, getAllUsers, updateUserStatus, getMe };

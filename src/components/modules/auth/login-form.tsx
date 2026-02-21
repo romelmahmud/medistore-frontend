@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import { getUser } from "@/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,6 +24,13 @@ import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { toast } from "sonner";
 import * as z from "zod";
+type AuthUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: "CUSTOMER" | "SELLER" | "ADMIN"; // restrict roles
+  emailVerified: boolean;
+};
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -43,25 +49,31 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
 
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
+
       try {
-        const { data, error } = await authClient.signIn.email(value);
+        const { data, error } = await authClient.signIn.email({
+          email: value.email,
+          password: value.password,
+        });
 
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
-        } else {
-          const loggedInUser = await getUser();
-          setUser(loggedInUser);
+        }
+
+        if (data?.user) {
+          const user = data.user as unknown as AuthUser; // ✅ cast to typed user
+          setUser(user);
           toast.success("Logged in successfully", { id: toastId });
-          // Redirect based on role
-          if (loggedInUser.role === "ADMIN" || loggedInUser.role === "SELLER") {
+
+          if (user.role === "ADMIN" || user.role === "SELLER") {
             router.replace("/dashboard");
           } else {
             router.replace("/");
           }
         }
-      } catch (error) {
-        toast.error("Failed to log in", { id: toastId });
+      } catch (err) {
+        toast.error("Something went wrong", { id: toastId });
       }
     },
     validators: {
@@ -78,7 +90,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
       </CardHeader>
       <CardContent>
         <form
-          id="register-form"
+          id="login-form"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
@@ -141,7 +153,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         >
           {({ isSubmitting, canSubmit }) => (
             <Button
-              form="register-form"
+              form="login-form"
               type="submit"
               disabled={isSubmitting || !canSubmit}
               className="
