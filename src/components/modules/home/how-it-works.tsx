@@ -23,17 +23,17 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <div className=" grid min-h-1/2 mt-[6rem] items-center  max-w-(--breakpoint-6xl)">
-      <div className="mx-auto mt-10 max-w-(--breakpoint-lg) px-6 sm:mt-16 lg:col-span-3">
-        <h2 className="text-start font-semibold text-4xl tracking-tight sm:text-5xl">
+    <div className=" flex flex-col items-center justify-center mt-12 max-w-(--breakpoint-2xl)">
+      <div className="w-full max-w-(--breakpoint-xl) px-6 py-10">
+        <h2 className="text-pretty font-bold text-4xl tracking-[-0.03em] sm:mx-auto sm:max-w-xl sm:text-center md:text-[2.75rem] md:leading-[1.2]">
           How It Works
         </h2>
-        <p className=" mt-4 max-w-[60ch] text-start text-foreground/80 sm:text-lg">
+        <p className="mt-2 text-lg max-w-[60ch] mx-auto text-muted-foreground text-center sm:text-xl">
           Ordering medicines from MediStore is simple, secure, and convenient.
           Follow these three easy steps to get started.
         </p>
       </div>
-      <div className="mx-auto mt-10 grid max-w-(--breakpoint-lg) gap-6 px-6 sm:mt-16 lg:grid-cols-3">
+      <div className="mx-auto mt-4 grid max-w-(--breakpoint-lg) gap-6 px-6 lg:grid-cols-3">
         {steps.map((step) => (
           <div
             className="flex flex-col rounded-xl border px-5 py-6"

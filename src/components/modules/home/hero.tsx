@@ -8,7 +8,7 @@ export default function Hero() {
         <h1 className="mt-6 font-bold text-4xl tracking-tighter sm:text-5xl md:text-6xl md:leading-[1] lg:text-7xl">
           Your Trusted Online Pharmacy for Everyday Healthcare
         </h1>
-        <p className="mt-6 text-foreground/80 md:text-lg">
+        <p className="mt-6 text-foreground/80 md:text-lg max-">
           MediStore makes it easy to find and order genuine over-the-counter
           medicines and healthcare essentials. Enjoy secure checkout, fast
           delivery, and reliable service — all from the comfort of your home.
