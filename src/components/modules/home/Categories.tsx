@@ -4,7 +4,10 @@ import Link from "next/link";
 const Categories = async () => {
   const categories = await getCategories();
   return (
-    <div className="flex items-center justify-center mt-12 max-w-(--breakpoint-2xl)">
+    <div
+      id="categories"
+      className="flex items-center justify-center mt-12 max-w-(--breakpoint-2xl)"
+    >
       <div className="w-full max-w-(--breakpoint-xl) px-6 py-10">
         <h2 className="text-pretty font-bold text-4xl tracking-[-0.03em] sm:mx-auto sm:max-w-xl sm:text-center md:text-[2.75rem] md:leading-[1.2]">
           Browse medicines by category
