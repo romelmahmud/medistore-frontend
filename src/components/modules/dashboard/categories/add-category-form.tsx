@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 
 import { createCategory, updateCategory } from "@/actions/category.actions";
-import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoryUpdateType } from "@/types";
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ export const formSchema = z.object({
   name: z.string().min(2, "Medicine name is required"),
   description: z.string().min(10, "Description is too short"),
 
-  imageUrl: z.string().url("ImageUrl required"),
+  imageUrl: z.string().optional(),
 });
 
 export function CreateCategoryForm({ data, mode }: any) {
@@ -34,7 +33,7 @@ export function CreateCategoryForm({ data, mode }: any) {
       name: data?.name || "",
       description: data?.description || "",
 
-      imageUrl: data?.imageUrl || "",
+      // imageUrl: data?.imageUrl || "",
     },
 
     validators: {
@@ -45,7 +44,7 @@ export function CreateCategoryForm({ data, mode }: any) {
         name: value.name,
         description: value.description,
 
-        imageUrl: value.imageUrl,
+        // imageUrl: value.imageUrl,
       };
 
       const toastId = toast.loading(
@@ -137,9 +136,9 @@ export function CreateCategoryForm({ data, mode }: any) {
             </form.Field>
           </FieldGroup>
 
-          <FieldGroup className="flex flex-column md:flex-row md:w-50">
+          {/* <FieldGroup className="flex flex-column md:flex-row md:w-50">
             <ImageUpload form={form} />
-          </FieldGroup>
+          </FieldGroup> */}
 
           <Button
             type="submit"

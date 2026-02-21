@@ -15,7 +15,7 @@ export default function Hero() {
         </p>
         <div className="mt-8 flex items-center justify-center gap-4">
           <LinkButton
-            href="/shop"
+            href="/medicines"
             className="rounded-md outline cursor-pointer"
             size="lg"
           >

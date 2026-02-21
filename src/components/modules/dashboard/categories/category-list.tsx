@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { Pencil, Trash2 } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 
 export interface Category {
@@ -60,11 +59,11 @@ export default function CategoryList({ categories }: CategoryListProps) {
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-3">
               {category.imageUrl ? (
-                <Image
-                  src={category.imageUrl}
+                <img
+                  src={`/${category?.imageUrl}`}
                   alt={category.name}
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                   className="rounded-md object-cover"
                 />
               ) : (
