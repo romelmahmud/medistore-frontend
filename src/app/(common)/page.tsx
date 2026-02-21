@@ -1,4 +1,5 @@
 import Categories from "@/components/modules/home/Categories";
+import FAQ from "@/components/modules/home/faq";
 import Hero from "@/components/modules/home/hero";
 
 import HowItWorks from "@/components/modules/home/how-it-works";
@@ -11,6 +12,7 @@ const HomePage = async () => {
       <Categories />
       <HowItWorks />
       <MedicinesSection />
+      <FAQ />
     </div>
   );
 };
