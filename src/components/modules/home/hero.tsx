@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="flex min-h-screen mt-5 lg:mt-[5rem] justify-center max-w-(--breakpoint-2xl)">
+    <div className="flex min-h-1/2 mt-5 items-center justify-center max-w-(--breakpoint-2xl)">
       <div className="mx-auto grid w-full  gap-12 px-6 py-12 lg:grid-cols-2">
         <div>
           <h1 className="mt-6 max-w-[17ch] font-bold text-4xl leading-[1]! tracking-[-0.035em] md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem]">
