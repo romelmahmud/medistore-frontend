@@ -23,7 +23,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <div className=" flex flex-col items-center justify-center mt-12 max-w-(--breakpoint-2xl)">
+    <div className=" flex flex-col items-center justify-center mt-12 max-w-(--breakpoint-2xl) pb-[40px]">
       <div className="w-full max-w-(--breakpoint-xl) px-6 py-10">
         <h2 className="text-pretty font-bold text-4xl tracking-[-0.03em] sm:mx-auto sm:max-w-xl sm:text-center md:text-[2.75rem] md:leading-[1.2]">
           How It Works

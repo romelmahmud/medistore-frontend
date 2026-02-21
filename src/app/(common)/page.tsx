@@ -2,6 +2,7 @@ import Categories from "@/components/modules/home/Categories";
 import Hero from "@/components/modules/home/hero";
 
 import HowItWorks from "@/components/modules/home/how-it-works";
+import MedicinesSection from "@/components/modules/home/MedicineSection";
 
 const HomePage = async () => {
   return (
@@ -9,6 +10,7 @@ const HomePage = async () => {
       <Hero />
       <Categories />
       <HowItWorks />
+      <MedicinesSection />
     </div>
   );
 };
