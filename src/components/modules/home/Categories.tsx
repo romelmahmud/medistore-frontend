@@ -25,6 +25,13 @@ const Categories = async () => {
               className="border rounded-lg p-4 transition-colors hover:bg-muted"
             >
               <div className="-mx-2 flex max-w-lg items-center gap-6 rounded-lg sm:mx-0">
+                {!category.imageUrl && (
+                  <div className="h-20 w-20 rounded-lg bg-muted flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">
+                      No Image
+                    </span>
+                  </div>
+                )}
                 <img
                   src={`/${category?.imageUrl}`}
                   alt={category.name}
