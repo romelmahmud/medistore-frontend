@@ -74,6 +74,29 @@ const getMedicineById = async (id: string) => {
   }
 };
 
+const getMedicineByCategory = async (categoryId: string) => {
+  try {
+    const res = await fetch(`${API_URL}/medicines/category/${categoryId}`, {
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      return {
+        data: data.data,
+        error: null,
+      };
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        message: "Something went wrong",
+      },
+    };
+  }
+};
 const createMedicine = async (medicineData: MedicineAddType) => {
   try {
     const cookieStore = await cookies();
@@ -181,6 +204,7 @@ const deleteMedicine = async (id: string) => {
 export const medicineService = {
   getMedicines,
   getMedicineById,
+  getMedicineByCategory,
   createMedicine,
   updateMedicine,
   deleteMedicine,

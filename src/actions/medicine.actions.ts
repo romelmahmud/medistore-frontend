@@ -16,6 +16,11 @@ export const getMedicineById = async (id: string) => {
   return res;
 };
 
+export const getMedicineByCategory = async (categoryId: string) => {
+  const res = await medicineService.getMedicineByCategory(categoryId);
+  return res;
+};
+
 export const updateMedicine = async (
   id: string,
   medicineData: MedicineUpdateType,
