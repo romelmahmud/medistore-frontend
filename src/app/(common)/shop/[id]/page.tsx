@@ -71,7 +71,7 @@ const MedicineDetailsPage = async ({
         </div>
       </div>
       <div className="container border px-5 py-2 rounded-md">
-        <Reviews medicineId={id} />
+        <Reviews medicineId={id} userId={data?.user?.id} />
       </div>
     </>
   );
