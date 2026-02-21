@@ -4,6 +4,7 @@ import Hero from "@/components/modules/home/hero";
 
 import HowItWorks from "@/components/modules/home/how-it-works";
 import MedicinesSection from "@/components/modules/home/MedicineSection";
+import Testimonials from "@/components/testimonials";
 
 const HomePage = async () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = async () => {
       <HowItWorks />
       <MedicinesSection />
       <FAQ />
+      <Testimonials />
     </div>
   );
 };
