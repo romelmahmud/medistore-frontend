@@ -1,5 +1,11 @@
+import Hero from "@/components/modules/home/hero";
+
 const HomePage = async () => {
-  return <div>HomePage</div>;
+  return (
+    <div className="w-full mx-auto mb-4 ">
+      <Hero />
+    </div>
+  );
 };
 
 export default HomePage;
