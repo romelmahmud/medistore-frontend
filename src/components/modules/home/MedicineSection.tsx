@@ -30,7 +30,7 @@ const MedicinesSection = async () => {
 
         {/* Show More Button */}
         <div className="flex justify-center mt-12">
-          <Link href="/shop">
+          <Link href="/medicines">
             <Button size="lg" variant="outline">
               Show More Medicines
             </Button>

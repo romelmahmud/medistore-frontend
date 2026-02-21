@@ -28,7 +28,7 @@ export function MedicineCard({ medicine, role }: any) {
           ৳ {medicine.price}
         </CardDescription>
         <Link
-          href={`/shop/${medicine.id}`}
+          href={`/medicines/${medicine.id}`}
           className="underline text-sm hover:text-primary"
         >
           View details

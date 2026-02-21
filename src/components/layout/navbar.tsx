@@ -40,8 +40,8 @@ interface NavbarProps {
 export default function Navbar({
   menu = [
     { title: "Home", url: "/" },
-    { title: "About", url: "/about" },
-    { title: "Shop", url: "/shop" },
+
+    { title: "Medicines", url: "/medicines" },
     { title: "Orders", url: "/orders" },
   ],
 }: NavbarProps) {
