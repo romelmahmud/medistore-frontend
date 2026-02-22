@@ -41,12 +41,16 @@ const getSession = async () => {
 
 const getMe = async () => {
   try {
+    const cookieStore = await cookies();
+
     const res = await fetch(`${API_URL}/users/me`, {
-      credentials: "include", // ✅ very important
+      headers: {
+        Cookie: cookieStore.toString(), // forward cookies manually
+      },
       cache: "no-store",
     });
+
     const data = await res.json();
-    console.log("GET ME DATA:", data);
 
     if (data.success) {
       return data.data;

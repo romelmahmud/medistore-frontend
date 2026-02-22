@@ -10,7 +10,6 @@ export const getUser = async () => {
 
 export const getMe = async () => {
   const res = await userService.getMe();
-  console.log("GET ME RES:", res);
   return res;
 };
 

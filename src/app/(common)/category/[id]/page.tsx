@@ -11,7 +11,6 @@ const SingleCategoryPage = async ({
   const { id } = await params;
   const medicineData = await getMedicineByCategory(id);
   let userRole: string = data?.user?.role || "GUEST";
-  console.log(medicineData);
 
   return (
     <div className=" max-w-7xl mx-auto mb-4 mt-4 max-h-screen">
