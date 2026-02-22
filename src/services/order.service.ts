@@ -3,7 +3,7 @@ import { CreateOrderInput } from "@/types";
 import { OrderStatus } from "@/types/order.type";
 import { cookies } from "next/headers";
 
-const API_URL = env.API_URL;
+const API_URL = env.NEXT_PUBLIC_API_URL!;
 
 const createOrder = async (orderData: CreateOrderInput) => {
   try {

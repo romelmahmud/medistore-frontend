@@ -1,19 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Roles } from "./constants/roles";
-import { userService } from "./services/user.service";
+import { env } from "./env";
 
 export const proxy = async (req: NextRequest) => {
-  const { data } = await userService.getSession();
-  const { pathname } = req.nextUrl;
+  // Read cookie directly from the request
+  const sessionToken = req.cookies.get("better-auth.session_token")?.value;
+
+  // If no cookie → redirect to login
+  if (!sessionToken) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // Optionally, fetch session data from backend using the token
+  const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/api/auth/get-session`, {
+    headers: {
+      Cookie: `better-auth.session_token=${sessionToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
 
   if (!data) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (data && pathname.startsWith("/profile")) {
-    return NextResponse.next();
-  }
-
+  const { pathname } = req.nextUrl;
   const role = data.user.role;
 
   // Admin & Seller guards

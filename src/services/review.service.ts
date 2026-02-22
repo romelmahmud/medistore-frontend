@@ -2,7 +2,7 @@ import { env } from "@/env";
 import { ReviewCreateType } from "@/types";
 import { cookies } from "next/headers";
 
-const API_URL = env.API_URL;
+const API_URL = env.NEXT_PUBLIC_API_URL!;
 
 // ✅ Helper to convert cookies to string header
 const getCookieHeader = async () => {

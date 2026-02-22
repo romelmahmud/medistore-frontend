@@ -60,6 +60,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           toast.error(error.message, { id: toastId });
           return;
         }
+        console.log(data);
 
         if (data?.user) {
           const user = data.user as unknown as AuthUser; // ✅ cast to typed user
