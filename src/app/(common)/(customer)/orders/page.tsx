@@ -1,6 +1,7 @@
 import { getCustomerOrders } from "@/actions/order.actions";
 import { getUser } from "@/actions/user.actions";
 import OrderTable from "@/components/modules/order/order-table";
+export const dynamic = "force-dynamic";
 
 const CustomerOrdersPage = async ({
   params,

@@ -4,7 +4,7 @@ import { MedicineCard } from "@/components/modules/shop/medicine-card";
 import PaginationControls from "@/components/ui/pagination-controls";
 import { medicineService } from "@/services/medicine.service";
 import { userService } from "@/services/user.service";
-
+export const dynamic = "force-dynamic";
 const ShopPage = async ({
   searchParams,
 }: {

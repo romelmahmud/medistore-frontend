@@ -1,6 +1,6 @@
 import { getAllOrders } from "@/actions/order.actions";
 import AdminOrderTable from "@/components/modules/dashboard/orders/admin-order-table";
-
+export const dynamic = "force-dynamic";
 const SellerOrdersPage = async () => {
   const data = await getAllOrders();
 

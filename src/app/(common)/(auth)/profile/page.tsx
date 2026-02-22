@@ -1,6 +1,8 @@
 import { getMe } from "@/actions/user.actions";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+
 const ProfilePage = async () => {
   const user = await getMe();
 
