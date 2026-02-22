@@ -28,6 +28,13 @@ export default function MedicineTable({
         </TableRow>
       </TableHeader>
       <TableBody>
+        {medicineData.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={7} className="text-center text-gray-500">
+              No medicines found.
+            </TableCell>
+          </TableRow>
+        )}
         {medicineData.map((medicine: MedicineReturnType) => (
           <TableRow key={medicine.id}>
             <TableCell className="font-medium">{medicine.name}</TableCell>

@@ -41,6 +41,11 @@ const ShopPage = async ({
         />
       </div>
       <div className="grid-cols-2 grid gap-4 md:grid-cols-3 lg:grid-cols-4 mt-8">
+        {medicineData.length === 0 && (
+          <p className="text-center text-gray-500 col-span-full">
+            No medicines found.
+          </p>
+        )}
         {medicineData.map((item: any) => (
           <MedicineCard key={item.id} medicine={item} role={userRole} />
         ))}

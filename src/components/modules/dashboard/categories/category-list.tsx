@@ -54,6 +54,11 @@ export default function CategoryList({ categories }: CategoryListProps) {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {categories.length === 0 && (
+        <div className="text-center text-muted-foreground col-span-full py-12">
+          No categories found.
+        </div>
+      )}
       {categories.map((category) => (
         <Card key={category.id} className="relative">
           <CardHeader className="pb-2">
