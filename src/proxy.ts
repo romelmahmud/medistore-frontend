@@ -2,26 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import { Roles } from "./constants/roles";
 import { env } from "./env";
 
+// Force dynamic rendering because we're reading cookies
+export const dynamic = "force-dynamic";
+
 export const proxy = async (req: NextRequest) => {
-  // Read cookie directly from the request
+  // Read the httpOnly cookie from the incoming request
   const sessionToken = req.cookies.get("better-auth.session_token")?.value;
 
-  // If no cookie → redirect to login
+  // If no token → redirect to login
   if (!sessionToken) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Optionally, fetch session data from backend using the token
+  // Fetch session from backend using the token
   const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/api/auth/get-session`, {
     headers: {
-      Cookie: `better-auth.session_token=${sessionToken}`,
+      Cookie: `better-auth.session_token=${sessionToken}`, // forward token
     },
+    credentials: "include",
     cache: "no-store",
   });
 
   const data = await res.json();
 
-  if (!data) {
+  // If no session returned → redirect to login
+  if (!data || !data.user) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -49,7 +54,6 @@ export const proxy = async (req: NextRequest) => {
   const isCustomerRoute = customerRoutes.some((route) =>
     pathname.startsWith(route),
   );
-
   if (isCustomerRoute && role !== Roles.customer) {
     return NextResponse.redirect(new URL("/", req.url));
   }
@@ -57,6 +61,7 @@ export const proxy = async (req: NextRequest) => {
   return NextResponse.next();
 };
 
+// Which routes the middleware applies to
 export const config = {
   matcher: [
     "/dashboard/:path*",
