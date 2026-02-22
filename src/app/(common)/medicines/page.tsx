@@ -11,7 +11,7 @@ const ShopPage = async ({
   searchParams: Promise<Record<string, string | undefined>>;
 }) => {
   const { data } = await userService.getSession();
-  console.log(data);
+
   let userRole: string = data?.user?.role || "GUEST";
 
   const params = await searchParams;

@@ -10,7 +10,7 @@ const CustomerSingleOrderPage = async ({
 }) => {
   const { id } = await params;
   const res = await getOrderById(id);
-  console.log(res.data.data.items);
+
   if (!res) {
     notFound();
   }

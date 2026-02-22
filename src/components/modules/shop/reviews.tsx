@@ -35,7 +35,7 @@ export default function Reviews({
     setLoadingPage(true);
     try {
       const res = await getMedicineReviews(medicineId);
-      console.log(res);
+
       setReviews(res.data.reviews ?? []);
 
       if (userId && res.data.userMeta) {

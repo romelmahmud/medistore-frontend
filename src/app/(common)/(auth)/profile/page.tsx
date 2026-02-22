@@ -4,7 +4,6 @@ import Image from "next/image";
 const ProfilePage = async () => {
   const user = await getMe();
 
-  console.log(user);
   return (
     <div className=" mx-auto px-6 py-12 space-y-8">
       {/* Header */}

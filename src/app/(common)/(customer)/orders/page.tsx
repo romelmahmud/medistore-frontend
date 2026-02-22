@@ -10,7 +10,6 @@ const CustomerOrdersPage = async ({
   const data = await getUser();
 
   const { data: orders } = await getCustomerOrders(data.id);
-  console.log(orders.data);
 
   return (
     <div className="max-w-7xl mx-auto px-4 mt-6">

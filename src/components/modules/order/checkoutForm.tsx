@@ -48,13 +48,10 @@ const CheckoutForm = () => {
         })),
       };
 
-      console.log("ORDER data:", orderData);
-
       const toastId = toast.loading("Creating Order....");
 
       try {
         const res = await createOrder(orderData);
-        console.log(res);
         if (!res.error) {
           toast.success("Order placed successfully", { id: toastId });
           localStorage.removeItem("cart");
