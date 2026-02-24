@@ -7,7 +7,7 @@ const API_URL = env.NEXT_PUBLIC_API_URL!;
 const getSession = async () => {
   try {
     const cookieStore = await cookies();
-    const res = await fetch(`${AUTH_URL}/get-session`, {
+    const res = await fetch(`${AUTH_URL}/api/auth/get-session`, {
       headers: {
         Cookie: cookieStore.toString(),
       },

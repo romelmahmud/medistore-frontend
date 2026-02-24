@@ -46,6 +46,7 @@ export default function Navbar({
   ],
 }: NavbarProps) {
   const { user, setUser } = useUser();
+  // console.log("navbar", user);
   const isDashboardUser =
     user?.role === Roles.admin || user?.role === Roles.seller;
   const userRole = user?.role?.toLowerCase();

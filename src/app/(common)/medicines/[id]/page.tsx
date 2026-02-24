@@ -15,6 +15,7 @@ const MedicineDetailsPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { data } = await userService.getSession();
+  // console.log("medicine page", data);
 
   const userRole = data?.user?.role || "GUEST";
   const { id } = await params;
@@ -65,7 +66,11 @@ const MedicineDetailsPage = async ({
             {userRole === Roles.customer ? (
               <AddToCartButton medicine={cartData} />
             ) : (
-              <></>
+              <>
+                <p className=" text-gray-400 border inline-block py-1 px-2 rounded">
+                  Please login as Customer to add to cart
+                </p>
+              </>
             )}
           </div>
         </div>
