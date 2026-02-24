@@ -8,4 +8,5 @@ export async function requireRole(allowedRoles: string[]) {
   if (!sessionData || !allowedRoles.includes(userRole)) {
     redirect("/");
   }
+  return sessionData;
 }
