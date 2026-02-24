@@ -37,7 +37,7 @@ const ShopPage = async ({
         <MedicineFilters
           categories={categories?.data}
           manufacturers={manufacturers}
-          pageRoute="/shop"
+          pageRoute="/medicines"
         />
       </div>
       <div className="grid-cols-2 grid gap-4 md:grid-cols-3 lg:grid-cols-4 mt-8">

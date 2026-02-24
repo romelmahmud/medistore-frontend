@@ -4,15 +4,22 @@ import PaginationControls from "@/components/ui/pagination-controls";
 import { Roles } from "@/constants/roles";
 import { requireRole } from "@/lib/require-role";
 
-const AdminUserPage = async () => {
+const AdminUserPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>;
+}) => {
   await requireRole([Roles.admin]);
-  const { data, meta }: any = await getAllUsers();
+  const params = await searchParams;
+  console.log(params);
+  const { data, meta }: any = await getAllUsers({ ...params });
   const pagination = meta || {
     limit: 10,
     page: 1,
     total: 0,
     totalPages: 1,
   };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4 pr-5 max-w-7xl mx-auto">

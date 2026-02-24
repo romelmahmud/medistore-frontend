@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { GetUserParams } from "@/types/user.type";
 import { cookies } from "next/headers";
 
 const AUTH_URL = env.NEXT_PUBLIC_BACKEND_URL!;
@@ -65,10 +66,21 @@ const getMe = async () => {
   }
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (params?: GetUserParams) => {
   try {
+    const url = new URL(`${API_URL}/users`);
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          url.searchParams.append(key, value.toString());
+        }
+      });
+    }
+
     const cookieStore = await cookies();
-    const res = await fetch(`${API_URL}/users`, {
+
+    const res = await fetch(url.toString(), {
       headers: {
         Cookie: cookieStore.toString(),
       },
@@ -76,6 +88,7 @@ const getAllUsers = async () => {
         tags: ["users"],
       },
     });
+
     const data = await res.json();
 
     if (data.success) {
@@ -85,12 +98,15 @@ const getAllUsers = async () => {
         error: null,
       };
     }
+
+    return {
+      data: null,
+      error: { message: "No data returned" },
+    };
   } catch (error) {
     return {
       data: null,
-      error: {
-        message: "Something went wrong",
-      },
+      error: { message: "Something went wrong" },
     };
   }
 };

@@ -1,6 +1,7 @@
 "use server";
 
 import { userService } from "@/services/user.service";
+import { GetUserParams } from "@/types/user.type";
 import { revalidateTag } from "next/cache";
 
 export const getUser = async () => {
@@ -13,8 +14,8 @@ export const getMe = async () => {
   return res;
 };
 
-export const getAllUsers = async () => {
-  const res = await userService.getAllUsers();
+export const getAllUsers = async (params?: GetUserParams) => {
+  const res = await userService.getAllUsers(params);
   return res;
 };
 

@@ -10,3 +10,7 @@ export type UserReturnType = {
   createdAt: string; // ISO string
   updatedAt: string; // ISO string
 };
+export type GetUserParams = {
+  page?: string;
+  limit?: string;
+};
