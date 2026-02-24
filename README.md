@@ -21,10 +21,15 @@
 
 ## 🧱 Tech Stack
 
-- **Next.js 13+ (App Router)**
+- **Next.js 16 (App Router)**
 - **TypeScript**
 - **React**
-- **Tailwind CSS** (or your CSS framework)
+- **Nodejs**
+- **ExpressJs**
+- **Tailwind CSS**
+- **Shadcn**
+- **PostgresSQL**
+- **Prisma**
 - **Cloudinary** for media uploads
 - **Vercel** for deployment
 
