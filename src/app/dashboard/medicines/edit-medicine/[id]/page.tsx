@@ -1,6 +1,8 @@
 import { getCategories } from "@/actions/category.actions";
 import { getMedicineById } from "@/actions/medicine.actions";
 import { AddMedicineForm } from "@/components/modules/dashboard/medicine/add-medicine";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 type Category = {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ const EditMedicinePage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
+  await requireRole([Roles.admin, Roles.seller]);
   const { id } = await params;
 
   const medicine = await getMedicineById(id);

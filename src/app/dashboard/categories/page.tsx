@@ -1,8 +1,11 @@
 import { getCategories } from "@/actions/category.actions";
 import CategoryList from "@/components/modules/dashboard/categories/category-list";
 import { LinkButton } from "@/components/ui/link-button";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 
 const AdminCategoriesPage = async () => {
+  await requireRole([Roles.admin]);
   const categories = await getCategories();
   return (
     <div>

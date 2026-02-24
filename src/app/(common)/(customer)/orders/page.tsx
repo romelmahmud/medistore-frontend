@@ -1,6 +1,8 @@
 import { getCustomerOrders } from "@/actions/order.actions";
 import { getUser } from "@/actions/user.actions";
 import OrderTable from "@/components/modules/order/order-table";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 export const dynamic = "force-dynamic";
 
 const CustomerOrdersPage = async ({
@@ -8,6 +10,7 @@ const CustomerOrdersPage = async ({
 }: {
   params: Promise<{ customerId: string }>;
 }) => {
+  await requireRole([Roles.customer]);
   const data = await getUser();
 
   const { data: orders } = await getCustomerOrders(data.id);

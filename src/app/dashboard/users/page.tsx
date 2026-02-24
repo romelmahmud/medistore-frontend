@@ -1,8 +1,11 @@
 import { getAllUsers } from "@/actions/user.actions";
 import UserTableWrapper from "@/components/modules/dashboard/users/user-table-wrapper";
 import PaginationControls from "@/components/ui/pagination-controls";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 
 const AdminUserPage = async () => {
+  await requireRole([Roles.admin]);
   const { data, meta }: any = await getAllUsers();
   const pagination = meta || {
     limit: 10,

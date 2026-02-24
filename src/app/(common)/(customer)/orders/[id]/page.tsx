@@ -1,6 +1,8 @@
 import { getOrderById } from "@/actions/order.actions";
 import { OrderItemsTable } from "@/components/modules/order/order-items-table";
 import { OrderSummary } from "@/components/modules/order/order-summary";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 import { notFound } from "next/navigation";
 
 const CustomerSingleOrderPage = async ({
@@ -8,6 +10,7 @@ const CustomerSingleOrderPage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
+  await requireRole([Roles.customer]);
   const { id } = await params;
   const res = await getOrderById(id);
 

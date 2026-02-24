@@ -1,7 +1,10 @@
 import { getAllOrders } from "@/actions/order.actions";
 import AdminOrderTable from "@/components/modules/dashboard/orders/admin-order-table";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 export const dynamic = "force-dynamic";
 const SellerOrdersPage = async () => {
+  await requireRole([Roles.admin, Roles.seller]);
   const data = await getAllOrders();
 
   return (

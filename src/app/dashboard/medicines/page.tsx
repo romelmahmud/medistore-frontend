@@ -3,6 +3,8 @@ import MedicineFilters from "@/components/modules/dashboard/medicine/medicine-fi
 import MedicineTableWrapper from "@/components/modules/dashboard/medicine/medicine-table-wrapper";
 import { LinkButton } from "@/components/ui/link-button";
 import PaginationControls from "@/components/ui/pagination-controls";
+import { Roles } from "@/constants/roles";
+import { requireRole } from "@/lib/require-role";
 import { medicineService } from "@/services/medicine.service";
 
 const MedicinePage = async ({
@@ -10,6 +12,7 @@ const MedicinePage = async ({
 }: {
   searchParams: Promise<Record<string, string | undefined>>;
 }) => {
+  await requireRole([Roles.admin, Roles.seller]);
   const params = await searchParams;
 
   const { data: medicineData, meta }: any = await medicineService.getMedicines({
