@@ -11,7 +11,7 @@ const AdminUserPage = async ({
 }) => {
   await requireRole([Roles.admin]);
   const params = await searchParams;
-  console.log(params);
+ 
   const { data, meta }: any = await getAllUsers({ ...params });
   const pagination = meta || {
     limit: 10,
